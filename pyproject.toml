@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "code-names-bot-text-graph"
+version = "0.1.0"
+description = ""
+authors = ["Nalu Zou"]
+readme = "README.md"
+packages = [{include = "code_names_bot_text_graph"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
