@@ -10,6 +10,7 @@ packages = [{include = "code_names_bot_text_graph"}]
 python = "^3.10"
 black = "^22.8.0"
 isort = "^5.10.1"
+PyYAML = "^6.0"
 
 [tool.poetry.scripts]
 format                                  = "tasks:format"

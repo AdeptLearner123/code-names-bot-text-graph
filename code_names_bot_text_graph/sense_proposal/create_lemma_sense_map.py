@@ -9,19 +9,19 @@ def main():
     with open(DICTIONARY, "r") as file:
         dictionary = yaml.safe_load(file)
 
-    lemma_sense_map = defaultdict(lambda: [])
-
     print("Status:", "compiling map")
-    for entry in dictionary.values():
+    lemma_sense_map = defaultdict(lambda: [])
+    for key, entry in dictionary.items():
         lemma_forms = [entry["lemma"]] + entry["variants"]
         pos = entry["pos"]
         for lemma_form in lemma_forms:
-            lemma_pos = (lemma_form, pos)
-            lemma_sense_map[lemma_pos].append(lemma_form)
+            lemma_pos = f"{lemma_form}|{pos}"
+            lemma_sense_map[lemma_pos].append(key)
+    lemma_sense_map = dict(lemma_sense_map)
 
     print("Status:", "writing")
     with open(LEMMA_SENSE_MAP, "w+") as file:
-        yaml.dump(lemma_sense_map, file)
+        yaml.dump(lemma_sense_map, file, default_flow_style=None, sort_keys=True, allow_unicode=True)
 
 
 if __name__ == "__main__":
