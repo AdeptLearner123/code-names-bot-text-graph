@@ -20,6 +20,7 @@ format                                  = "tasks:format"
 test-sense-proposer                     = "tests.test_sense_proposer:main"
 test-spacy                              = "tests.test_spacy:main"
 
+extract-texts                           = "code_names_bot_text_graph.text_extraction.extract_texts:main"
 create-sense-inventory                  = "code_names_bot_text_graph.sense_proposal.create_sense_inventory:main"
 
 [build-system]
