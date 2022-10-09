@@ -28,7 +28,13 @@ def main():
 
     lines = []
     for lemma_pos in sorted(list(lemma_senses.keys())):
-        line = "\t".join([lemma_pos, str(lemma_lengths[lemma_pos]), "|".join(lemma_senses[lemma_pos])])
+        line = "\t".join(
+            [
+                lemma_pos,
+                str(lemma_lengths[lemma_pos]),
+                "|".join(lemma_senses[lemma_pos]),
+            ]
+        )
         lines.append(line)
 
     print("Status:", "writing")

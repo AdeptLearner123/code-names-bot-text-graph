@@ -8,7 +8,7 @@ def main():
     print("Status:", "reading")
     with open(DICTIONARY, "r") as file:
         dictionary = yaml.safe_load(file)
-    
+
     print("Status:", "Extracting and linking")
     text_dict = dict()
     for key in tqdm(dictionary):
@@ -20,12 +20,12 @@ def main():
             text_key = f"{key}_text_{i}"
             text_dict[text_key] = text
             dictionary[key]["texts"][i] = text_key
-    
+
     print("Status:", "Dumping text list")
-    lines = [ f"{key}\t{text}" for key, text in text_dict.items() ]
+    lines = [f"{key}\t{text}" for key, text in text_dict.items()]
     with open(TEXT_LIST, "w+") as file:
         file.write("\n".join(lines))
-    
+
     print("Status:", "Dumping text linked dictionary")
     with open(DICTIONARY_TEXT_LINKED, "w+") as file:
         yaml.dump(dictionary, file)
