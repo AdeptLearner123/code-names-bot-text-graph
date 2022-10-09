@@ -1,2 +1,3 @@
 DICTIONARY = "static/dictionary.yaml"
-LEMMA_SENSE_MAP = "output/lemma_sense_map.yaml"
+SENSE_INVENTORY = "output/sense_inventory.txt"
+LENGTH_TO_LEMMAS_MAP = "output/length_to_lemmas.yaml"

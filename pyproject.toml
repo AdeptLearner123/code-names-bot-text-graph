@@ -11,11 +11,16 @@ python = "^3.10"
 black = "^22.8.0"
 isort = "^5.10.1"
 PyYAML = "^6.0"
+spacy = "^3.4.1"
 
 [tool.poetry.scripts]
+setup                                   = "tasks:setup"
 format                                  = "tasks:format"
 
-create-lemma-sense-map                  = "code_names_bot_text_graph.sense_proposal.create_lemma_sense_map:main"
+test-sense-proposer                     = "tests.test_sense_proposer:main"
+test-spacy                              = "tests.test_spacy:main"
+
+create-sense-inventory                  = "code_names_bot_text_graph.sense_proposal.create_sense_inventory:main"
 
 [build-system]
 requires = ["poetry-core"]

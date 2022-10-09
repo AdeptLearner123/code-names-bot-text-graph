@@ -26,3 +26,7 @@ def _command(command: Union[List[str], str], shell: bool = False):
 def format():
     _command(["black", "."])
     _command(["isort", "."])
+
+
+def setup():
+    _command(["spacy", "download", "en_core_web_sm"])
