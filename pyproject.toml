@@ -7,11 +7,12 @@ readme = "README.md"
 packages = [{include = "code_names_bot_text_graph"}]
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.10,<3.11"
 black = "^22.8.0"
 isort = "^5.10.1"
 PyYAML = "^6.0"
 spacy = "^3.4.1"
+PySide6 = "^6.3.2"
 
 [tool.poetry.scripts]
 setup                                   = "tasks:setup"
@@ -22,6 +23,9 @@ test-spacy                              = "tests.test_spacy:main"
 
 extract-texts                           = "code_names_bot_text_graph.text_extraction.extract_texts:main"
 create-sense-inventory                  = "code_names_bot_text_graph.sense_proposal.create_sense_inventory:main"
+propose-senses                          = "code_names_bot_text_graph.sense_proposal.propose_senses:main"
+
+labeler                                 = "code_names_bot_text_graph.labeler.labeler:main"
 
 [build-system]
 requires = ["poetry-core"]
