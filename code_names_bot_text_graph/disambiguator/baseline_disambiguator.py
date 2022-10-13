@@ -1,13 +1,12 @@
 from .disambiguator import Disambiguator
 
 class BaselineDisambiguator(Disambiguator):
-    def disambiguate(tokens, sense_definitions_list):
-        senses = []
+    def disambiguate(self, token_senses):
+        predicted_senses = []
 
-        for sense_definitions in sense_definitions_list:
-            if len(sense_definitions) == 0:
-                senses.append(None)
+        for _, senses in token_senses:
+            if len(senses) == 0:
+                predicted_senses.append(None)
             else:
-                first_sense, _ = sense_definitions[0]
-                senses.append(first_sense)
-        return senses
+                predicted_senses.append(senses[0])
+        return predicted_senses
