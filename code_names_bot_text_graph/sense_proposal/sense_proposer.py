@@ -1,76 +1,45 @@
-import spacy
-import yaml
-from tqdm import tqdm
-
 from config import SENSE_INVENTORY
 
 
 class SenseProposer:
-    SPACY_POS_CONVERTER = {
-        "NOUN": "noun",
-        "PROPN": "proper",
-        "VERB": "verb",
-        "ADJ": "adjective",
-        "ADV": "adverb",
-    }
-
-    def __init__(self):
-        nlp = spacy.load("en_core_web_sm")
-        self._nlp = nlp
-
-        with open(SENSE_INVENTORY, "r") as file:
-            lines = file.read().splitlines()
-            lines = [line.split("\t") for line in lines]
-            lemma_senses = {line[0]: line[2].split("|") for line in lines}
-            lemma_lengths = {line[0]: int(line[1]) for line in lines}
-
-        self._construct_lemma_lookup(lemma_senses, lemma_lengths)
-
-    def _construct_lemma_lookup(self, lemma_senses, lemma_lengths):
-        self._lemmas_by_length = dict()
-        for lemma_pos in lemma_senses:
-            [lemma, pos] = lemma_pos.split("|")
-
-            length = lemma_lengths[lemma_pos]
-            if length not in self._lemmas_by_length:
-                self._lemmas_by_length[length] = dict()
-
-            key = (lemma, pos) if length == 1 else lemma
-            if key not in self._lemmas_by_length:
-                self._lemmas_by_length[length][key] = []
-            self._lemmas_by_length[length][key] += lemma_senses[lemma_pos]
-
+    def __init__(self, sense_inventory):
+        self._sense_inventory = sense_inventory
+    
     def _assign_multi_word_possibilities(
-        self, doc, token_senses, lemma_to_senses, length
+        self, token_tags, token_senses, length
     ):
-        for i in range(len(doc) - length + 1):
-            span = doc[i : i + length].text
-            if span in lemma_to_senses:
+        for i in range(len(token_tags) - length + 1):
+            span = token_tags[i : i + length]
+            span_tokens = [ token for token, _ in span ]
+            span_key = ' '.join(span_tokens)
+
+            if span_key in self._sense_inventory:
                 for _, senses in token_senses[i : i + length]:
-                    senses += lemma_to_senses[span]
+                    senses += self._sense_inventory[span_key]
 
-    def _assign_single_word_possibilities(self, doc, token_senses, lemma_to_senses):
-        for i, token in enumerate(doc):
-            if token.pos_ not in self.SPACY_POS_CONVERTER or token.is_stop:
+    def _assign_single_word_possibilities(self, token_tags, token_senses):
+        for i, (token, tag) in enumerate(token_tags):
+            if tag is None:
                 continue
 
-            key = (token.text, self.SPACY_POS_CONVERTER[token.pos_])
-            if key not in lemma_to_senses:
-                continue
+            key = f"{token}|{tag}"
 
-            _, senses = token_senses[i]
-            senses += lemma_to_senses[key]
+            if key in self._sense_inventory:
+                _, senses = token_senses[i]
+                senses += self._sense_inventory[key]
 
-    def propose_senses(self, text):
-        doc = self._nlp(text)
-        token_senses = [(token.text, []) for token in doc]
+    def propose_senses(self, token_tags):
+        token_senses = [(token, []) for token, _ in token_tags]
 
         for length in range(2, 5):
             self._assign_multi_word_possibilities(
-                doc, token_senses, self._lemmas_by_length[length], length
+                token_tags, token_senses, length
             )
         self._assign_single_word_possibilities(
-            doc, token_senses, self._lemmas_by_length[1]
+            token_tags, token_senses
         )
+
+        # Remove duplicates
+        token_senses = [(token, list(set(senses))) for token, senses in token_senses]
 
         return token_senses
