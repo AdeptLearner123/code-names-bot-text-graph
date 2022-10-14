@@ -13,6 +13,8 @@ isort = "^5.10.1"
 PyYAML = "^6.0"
 spacy = "^3.4.1"
 PySide6 = "^6.3.2"
+pytorch-lightning = "^1.7.7"
+transformers = "^4.23.1"
 
 [tool.poetry.scripts]
 setup                                   = "tasks:setup"
@@ -20,6 +22,7 @@ format                                  = "tasks:format"
 
 test-sense-proposer                     = "tests.test_sense_proposer:main"
 test-spacy                              = "tests.test_spacy:main"
+test-consec                             = "tests.test_consec:main"
 
 extract-texts                           = "code_names_bot_text_graph.text_extraction.extract_texts:main"
 create-sense-inventory                  = "code_names_bot_text_graph.sense_proposal.create_sense_inventory:main"
