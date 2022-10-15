@@ -185,7 +185,6 @@ class ConsecDataset(BaseDataset):
                 sample.marked_text is None
             ), "Marked text is expected to be set via side-effect, but was found already set"
             sample.marked_text = self.create_marked_text(sample)
-            print("Marked text", sample.marked_text)
 
             # refine and text-encode definitions
             candidate_definitions = self.refine_definitions(

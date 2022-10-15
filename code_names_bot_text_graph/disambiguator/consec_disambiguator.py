@@ -90,7 +90,7 @@ class ConsecDisambiguator(Disambiguator):
             
 
             token, senses = token_senses[idx]
-            candidate_definitions = [ ConsecDefinition(self._get_definition(sense), sense) for sense in senses ]
+            candidate_definitions = [ ConsecDefinition(self._get_definition(sense), "dog") for sense in senses ]
             
             context_definitions = []
             for i, (token, disambiguated_sense) in enumerate(zip(tokens, disambiguated_senses)):
