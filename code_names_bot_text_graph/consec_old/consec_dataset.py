@@ -193,6 +193,7 @@ class ConsecDataset(BaseDataset):
             context_definitions = self.refine_definitions(
                 sample, [d for d, _ in sample.context_definitions], are_context_definitions=True
             )
+
             gold_definitions = (
                 self.refine_definitions(sample, sample.gold_definitions, are_context_definitions=False)
                 if sample.gold_definitions

@@ -30,6 +30,7 @@ class SenseExtractor(ABC, nn.Module):
     @staticmethod
     def mask_logits(logits: torch.Tensor, logits_mask: torch.Tensor) -> torch.Tensor:
         logits_dtype = logits.dtype
+        print("Logits dtype", logits_dtype)
         if logits_dtype == torch.float16:
             logits = logits * (1 - logits_mask) - 65500 * logits_mask
         else:
@@ -113,6 +114,7 @@ class ConsecDebertaModel(DebertaPreTrainedModel):
         if token_type_ids is None:
             token_type_ids = torch.zeros(input_shape, dtype=torch.long, device=device)
 
+        print("Input ids shape", input_ids.size())
         embedding_output = self.embeddings(
             input_ids=input_ids,
             token_type_ids=token_type_ids,
@@ -213,6 +215,7 @@ class DebertaPositionalExtractor(SenseExtractor):
             loss = self.criterion(classification_logits, labels)
 
         prediction_probs = torch.softmax(classification_logits, dim=-1)
+        print("Prediction probs size", prediction_probs.size())
         prediction_markers = self.compute_markers(input_ids, classification_logits)
 
         return SenseExtractorOutput(
