@@ -23,7 +23,6 @@ class Labeler(ABC):
         curr_key = self._keys[self._current]
         self._save_labels(curr_key)
         self._current = min(self._current + 1, len(self._keys) - 1)
-        print(self._current)
         self._update(self._keys[self._current])
 
     @Slot()

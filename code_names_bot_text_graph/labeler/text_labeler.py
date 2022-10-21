@@ -93,7 +93,7 @@ def main():
         random.seed(0)
         random.shuffle(keys)
 
-    labeler.start(keys, 30)
+    labeler.start(keys)
 
 if __name__ == "__main__":
     main()
