@@ -1,12 +1,14 @@
 from code_names_bot_text_graph.token_tagger.token_tagger import TokenTagger
 from code_names_bot_text_graph.sense_proposal.sense_proposer import SenseProposer
-from code_names_bot_text_graph.disambiguator.baseline_disambiguator import BaselineDisambiguator
+from code_names_bot_text_graph.disambiguator.consec_disambiguator import ConsecDisambiguator
+#from code_names_bot_text_graph.disambiguator.baseline_disambiguator import BaselineDisambiguator
 
 from config import TEXT_LIST, SENSE_LABELS, DICTIONARY, SENSE_INVENTORY
 
 import json
 from enum import Enum
 from collections import defaultdict
+from tqdm import tqdm
 
 class ErrorReason(Enum):
     MISSING_SENSE = 0
@@ -60,16 +62,18 @@ def main():
 
     token_tagger = TokenTagger()
     sense_proposer = SenseProposer(sense_inventory)
-    disambiguator = BaselineDisambiguator(dictionary)
+    #disambiguator = BaselineDisambiguator(dictionary)
+    disambiguator = ConsecDisambiguator(dictionary)
 
     total_correct = 0
     total_incorrect = 0
     all_errors = defaultdict(lambda: [])
 
-    for text_id in all_sense_labels.keys():
+    for text_id in tqdm(all_sense_labels.keys()):
         sense_labels = all_sense_labels[text_id]
         text = text_dict[text_id]
 
+        print("Testing", text_id)
         correct, errors = evaluate_text(text, token_tagger, sense_proposer, disambiguator, sense_labels, dictionary)
         
         total_correct += correct

@@ -8,9 +8,14 @@ class TokenTagger():
         "ADJ": "adjective",
         "ADV": "adverb",
     }
+
+    MANUAL_REMOVE_STOP_WORDS = {
+        "us" # Don't want "US" as in United States to be classified as a stop word
+    }
     
     def __init__(self):
         self._nlp = spacy.load("en_core_web_sm", disable=["parser", "ner"])
+        self._nlp.Defaults.stop_words -= self.MANUAL_REMOVE_STOP_WORDS
 
     def _get_token_tag(self, token):
         if token.is_stop:

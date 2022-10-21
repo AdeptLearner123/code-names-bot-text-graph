@@ -9,8 +9,8 @@ class LabelerWindow(QtWidgets.QWidget):
 
     def __init__(self):
         super().__init__()
-        self.layout = QtWidgets.QVBoxLayout()
-        self.setLayout(self.layout)
+        self._layout = QtWidgets.QVBoxLayout()
+        self.setLayout(self._layout)
 
         self._add_title()
         self._add_sentence()
@@ -18,63 +18,69 @@ class LabelerWindow(QtWidgets.QWidget):
         self._add_sense_input()
     
     def _add_title(self):
-        self.title = QtWidgets.QLabel()
-        self.layout.addWidget(self.title)
+        self._title = QtWidgets.QLabel()
+        self._layout.addWidget(self._title)
     
     def _add_sentence(self):
         sentence_widget = QtWidgets.QLabel()
-        self.layout.addWidget(sentence_widget)
+        self._layout.addWidget(sentence_widget)
         self.sentence_widget = sentence_widget
 
     def _add_sense_list(self):
         sense_list = QtWidgets.QLabel()
-        self.layout.addWidget(sense_list)
+        self._layout.addWidget(sense_list)
         self.sense_list = sense_list
     
     def _add_sense_input(self):
         sense_input = QtWidgets.QLineEdit()
-        self.layout.addWidget(sense_input)
+        self._layout.addWidget(sense_input)
         self.sense_input = sense_input
         self.sense_input.setVisible(False)
 
     def _render(self):
         sentence_content = ""
-        for i, token in enumerate(self.tokens):
-            sentence_content += f"<u>{token}</u>" if i == self.current else token
+        for i, token in enumerate(self._tokens):
+            sentence_content += f"<u>{token}</u>" if i == self._current else token
             sentence_content += " "
         self.sentence_widget.setText(sentence_content)
 
-        senses = self.senses[self.current]
-        definitions = self.definitions[self.current]
-        label = self.labels[self.current]
+        senses = self._senses[self._current]
+        definitions = self._definitions[self._current]
+        label = self._labels[self._current]
+        predicted_sense = self._predicted_senses[self._current]
         senses_content = "<ul>"
         label_style = "style=\"color:green;\""
+        predicted_style = "style=\"color:yellow\""
+        print(label, predicted_sense)
         for i, (sense, definition) in enumerate(zip(senses, definitions)):
             is_label = sense == label
-            senses_content += f"<li {label_style if is_label else ''}>[{self.INPUT_KEYS[i]}]  {sense}:  {definition}</li>"
+            is_predicted = sense == predicted_sense
+            style = label_style if is_label else predicted_style if is_predicted else ''
+            senses_content += f"<li {style}>[{self.INPUT_KEYS[i]}]  {sense}:  {definition}</li>"
         if label is not None and label not in senses:
             senses_content += f"<li {label_style}>{label}</li>"
         senses_content += "</ul>"
         self.sense_list.setText(senses_content)
 
     def _prev_term(self):
-        self.current = max(0, self.current - 1)
+        self._current = max(0, self._current - 1)
         self._render()
 
     def _next_term(self):
-        self.current = min(len(self.tokens) - 1, self.current + 1)
+        self._current = min(len(self._tokens) - 1, self._current + 1)
         self._render()
     
     def get_labels(self):
-        return self.labels
+        return self._labels
     
-    def set_text(self, title, tokens, senses, definitions, labels):
-        self.current = 0
-        self.tokens = tokens
-        self.senses = senses
-        self.definitions = definitions
-        self.labels = labels
-        self.title.setText(f"<h1>{title}</h1>")
+    def set_text(self, title, tokens, senses, definitions, labels, predicted_senses):
+        self._current = 0
+        self._tokens = tokens
+        self._senses = senses
+        self._definitions = definitions
+        self._labels = labels
+        self._predicted_senses = predicted_senses
+        self._title.setText(f"<h1>{title}</h1>")
         self._render()
     
     def keyPressEvent(self, event):
@@ -91,7 +97,7 @@ class LabelerWindow(QtWidgets.QWidget):
         elif event.key() == Qt.Key_Return:  # Enter
             if self.sense_input.isVisible():
                 input_text = self.sense_input.text()
-                self.labels[self.current] = None if len(input_text) == 0 else input_text
+                self._labels[self._current] = None if len(input_text) == 0 else input_text
                 self.sense_input.setVisible(False)
                 self.sense_input.clearFocus()
             else:
@@ -99,5 +105,5 @@ class LabelerWindow(QtWidgets.QWidget):
                 self.sense_input.setFocus()
         elif event.text() in self.INPUT_KEYS:
             input_index = self.INPUT_KEYS.index(event.text())
-            self.labels[self.current] = self.senses[self.current][input_index]
+            self._labels[self._current] = self._senses[self._current][input_index]
         self._render()

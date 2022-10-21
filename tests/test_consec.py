@@ -3,6 +3,7 @@ import json
 from code_names_bot_text_graph.disambiguator.consec_disambiguator import ConsecDisambiguator
 
 from config import DICTIONARY
+import time
 
 def main():
     with open(DICTIONARY, "r") as file:
@@ -15,8 +16,34 @@ def main():
         ("beautiful", ["m_en_gbus0081680.006"]),
         ("dog", ["m_en_gbus0287810.007", "m_en_gbus0287810.012", "m_en_gbus0287810.013", "m_en_gbus0287810.019", "m_en_gbus0287810.020", "m_en_gbus0287810.023"])
     ]
-    disambiguator = ConsecDisambiguator(dictionary)
+
+    """
+    token_senses = [
+        ("relating", ['m_en_gbus0859220.013', 'm_en_gbus0859220.015', 'm_en_gbus0859220.016', 'm_en_gbus0859220.018', 'm_en_gbus0859220.020', 'm_en_gbus0859220.007']),
+        ("to", []),
+        ("or", []),
+        ("denoting", []),
+        ("(", []),
+        ("fictional", []),
+        ("or", []),
+        ("hypothetical", []),
+        (")", []),
+        ("space", []),
+        ("travel", []),
+        ("by", []),
+        ("means", []),
+        ("of", []),
+        ("distorting", []),
+        ("space", []),
+        ("-", []),
+        ("time", [])
+    ]
+    """
+
+    disambiguator = ConsecDisambiguator(dictionary, True)
+    start = time.time()
     senses = disambiguator.disambiguate(token_senses)
+    print("Time", time.time() - start)
     print(senses)
 
 

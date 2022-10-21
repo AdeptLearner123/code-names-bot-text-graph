@@ -7,9 +7,10 @@ from code_names_bot_text_graph.consec.tokenizer import ConsecTokenizer
 from code_names_bot_text_graph.consec.sense_extractor import SenseExtractor
 
 class ConsecDisambiguator(Disambiguator):
-    def __init__(self, dictionary):
+    def __init__(self, dictionary, debug_mode=False):
         super().__init__(dictionary)
 
+        self._debug_mode = debug_mode
         state_dict = torch.load(CONSEC_MODEL_STATE)
         self._sense_extractor = SenseExtractor()
         self._sense_extractor.load_state_dict(state_dict)
@@ -19,13 +20,15 @@ class ConsecDisambiguator(Disambiguator):
     def _disambiguate_token(self, tokens, target_idx, candidate_senses, context_senses):
         candidate_definitions = [ self._get_definition(sense) for sense in candidate_senses ]
         context_definitions = [ (i, self._get_definition(sense)) for i, sense in context_senses ]
+        #context_definitions = []
 
         tokenizer_result = self._tokenizer.tokenize(tokens, target_idx, candidate_definitions, context_definitions)
         probs = self._sense_extractor.extract(*tokenizer_result)
 
-        sense_idxs = torch.tensor(probs).argsort(descending=True)
-        for sense_idx in sense_idxs:
-            print(f"{candidate_senses[sense_idx]}:  {probs[sense_idx]} --- {candidate_definitions[sense_idx]}")
+        if self._debug_mode:
+            sense_idxs = torch.tensor(probs).argsort(descending=True)
+            for sense_idx in sense_idxs:
+                print(f"{candidate_senses[sense_idx]}:  {probs[sense_idx]} --- {candidate_definitions[sense_idx]}")
 
         sense_idx = torch.argmax(torch.tensor(probs))
         return candidate_senses[sense_idx]

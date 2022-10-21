@@ -40,6 +40,7 @@ class SenseProposer:
         )
 
         # Remove duplicates
-        token_senses = [(token, list(set(senses))) for token, senses in token_senses]
+        # Sort sense ids so that proposed senses are deterministic.
+        token_senses = [(token, sorted(list(set(senses)))) for token, senses in token_senses]
 
         return token_senses

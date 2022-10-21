@@ -6,13 +6,15 @@ from PySide6.QtCore import Slot
 
 from code_names_bot_text_graph.sense_proposal.sense_proposer import SenseProposer
 from code_names_bot_text_graph.token_tagger.token_tagger import TokenTagger
+from code_names_bot_text_graph.disambiguator.consec_disambiguator import ConsecDisambiguator
 from config import DICTIONARY, SENSE_LABELS, TEXT_LIST, SENSE_INVENTORY
 from .labeler_window import LabelerWindow
 
 class Labeler:
-    def __init__(self, token_tagger, sense_proposer, text_ids, text_dict, dictionary, labels, save_labels_handler):
+    def __init__(self, token_tagger, sense_proposer, disambiguator, text_ids, text_dict, dictionary, labels, save_labels_handler):
         self._token_tagger = token_tagger
         self._sense_proposer = sense_proposer
+        self._disambiguator = disambiguator
         self._text_ids = text_ids
         self._text_dict = text_dict
         self._dictionary = dictionary
@@ -28,6 +30,7 @@ class Labeler:
         text = self._text_dict[current_text_id]
         token_tags = self._token_tagger.tokenize_tag(text)
         token_senses = self._sense_proposer.propose_senses(token_tags)
+        predicted_senses = self._disambiguator.disambiguate(token_senses)
 
         tokens, senses_list, definitions_list = [], [], []
         
@@ -38,7 +41,7 @@ class Labeler:
 
         labels = self._labels[current_text_id] if current_text_id in self._labels else [None] * len(tokens)
 
-        self.window.set_text(title, tokens, senses_list, definitions_list, labels)
+        self.window.set_text(title, tokens, senses_list, definitions_list, labels, predicted_senses)
 
     @Slot()
     def _next_handler(self):
@@ -114,7 +117,8 @@ def main():
 
     token_tagger = TokenTagger()
     sense_proposer = SenseProposer(sense_inventory)
-    labeler = Labeler(token_tagger, sense_proposer, text_ids, text_dict, dictionary, sense_labels, save_labels)
+    disambiguator = ConsecDisambiguator(dictionary)
+    labeler = Labeler(token_tagger, sense_proposer, disambiguator, text_ids, text_dict, dictionary, sense_labels, save_labels)
     labeler.start()
 
 if __name__ == "__main__":
