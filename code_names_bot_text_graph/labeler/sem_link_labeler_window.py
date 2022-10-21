@@ -14,6 +14,12 @@ class SemLinkLabelerWindow(LabelerWindow):
 
         self._text.setText(text_content)
 
+    def get_tokens(self):
+        return self._tokens
+    
+    def get_token_types(self):
+        return self._token_types
+
     def set_text(self, title, definition, tokens, token_types, senses, definitions, labels, predicted_senses):
         self._definition = definition
         self._token_types = token_types

@@ -57,8 +57,32 @@
             "type": "DOMAIN"
         },
         "sailor": {
-            "sense": null,
+            "sense": "m_en_gbus0893620.005",
             "type": "CLASS"
+        }
+    },
+    "m_en_gbus0197410.004": {
+        "boat": {
+            "sense": "m_en_gbus0108390.006",
+            "type": "CLASS"
+        },
+        "medieval_history": {
+            "sense": null,
+            "type": "DOMAIN"
+        },
+        "nautical": {
+            "sense": null,
+            "type": "DOMAIN"
+        }
+    },
+    "m_en_gbus0199530.018": {
+        "collection": {
+            "sense": "m_en_gbus0199530.014",
+            "type": "CLASS"
+        },
+        "fashion": {
+            "sense": "m_en_gbus0352190.009",
+            "type": "DOMAIN"
         }
     },
     "m_en_gbus0215590.010": {
@@ -293,6 +317,26 @@
             "type": "DOMAIN"
         }
     },
+    "m_en_gbus0371510.026": {
+        "movement": {
+            "sense": "m_en_gbus0665340.008",
+            "type": "CLASS"
+        }
+    },
+    "m_en_gbus0391650.050": {
+        "be the driving force behind": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "head": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "lead": {
+            "sense": null,
+            "type": "SYN"
+        }
+    },
     "m_en_gbus0415490.007": {
         "as pleased as Punch": {
             "sense": null,
@@ -371,9 +415,25 @@
             "type": "DOMAIN"
         }
     },
+    "m_en_gbus0495660.007": {
+        "us_state": {
+            "sense": null,
+            "type": "CLASS"
+        }
+    },
     "m_en_gbus0573160.004": {
         "storeroom": {
             "sense": "m_en_gbus0999130.008",
+            "type": "CLASS"
+        }
+    },
+    "m_en_gbus0604440.011": {
+        "greek_history": {
+            "sense": null,
+            "type": "DOMAIN"
+        },
+        "region": {
+            "sense": "m_en_gbus0857520.016",
             "type": "CLASS"
         }
     },
@@ -394,6 +454,38 @@
         },
         "structure": {
             "sense": "m_en_gbus1004190.018",
+            "type": "CLASS"
+        }
+    },
+    "m_en_gbus0784790.009": {
+        "mining": {
+            "sense": "m_en_gbus0646290.005",
+            "type": "DOMAIN"
+        },
+        "pit": {
+            "sense": "m_en_gbus0784790.006",
+            "type": "CLASS"
+        }
+    },
+    "m_en_gbus0794360.005": {
+        "implement": {
+            "sense": "m_en_gbus0498960.013",
+            "type": "CLASS"
+        }
+    },
+    "m_en_gbus0812930.005": {
+        "journalism": {
+            "sense": "m_en_gbus0536000.005",
+            "type": "DOMAIN"
+        },
+        "meeting": {
+            "sense": "m_en_gbus0629920.006",
+            "type": "CLASS"
+        }
+    },
+    "m_en_gbus0902360.005": {
+        "city": {
+            "sense": "m_en_gbus0186000.006",
             "type": "CLASS"
         }
     },
