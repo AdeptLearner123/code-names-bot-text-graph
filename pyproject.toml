@@ -26,11 +26,12 @@ test-consec                             = "tests.test_consec:main"
 test-consec-old                         = "tests.test_consec_old:main"
 
 extract-texts                           = "code_names_bot_text_graph.text_extraction.extract_texts:main"
-create-sense-inventory                  = "code_names_bot_text_graph.sense_proposal.create_sense_inventory:main"
+create-sense-inventory                  = "code_names_bot_text_graph.sense_inventory.create_sense_inventory:main"
 
-labeler                                 = "code_names_bot_text_graph.labeler.labeler:main"
-synonym-labeler                         = "code_names_bot_text_graph.synonym_labeler.synonym_labeler:main"
-evaluate                                = "code_names_bot_text_graph.evaluation.evaluate:main"
+text-labeler                            = "code_names_bot_text_graph.labeler.text_labeler:main"
+sem-link-labeler                        = "code_names_bot_text_graph.labeler.sem_link_labeler:main"
+evaluate-text-disambiguation            = "code_names_bot_text_graph.evaluation.evaluate_text_disambiguation:main"
+evaluate-sem-link-disambiguation        = "code_names_bot_text_graph.evaluation.evaluate_sem_link_disambiguation:main"
 
 [build-system]
 requires = ["poetry-core"]

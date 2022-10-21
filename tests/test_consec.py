@@ -1,6 +1,6 @@
 import json
 
-from code_names_bot_text_graph.disambiguator.consec_disambiguator import ConsecDisambiguator
+from code_names_bot_text_graph.text_disambiguator.consec_text_disambiguator import ConsecTextDisambiguator
 
 from config import DICTIONARY
 import time
@@ -40,7 +40,7 @@ def main():
     ]
     """
 
-    disambiguator = ConsecDisambiguator(dictionary, True)
+    disambiguator = ConsecTextDisambiguator(dictionary, True)
     start = time.time()
     senses = disambiguator.disambiguate(token_senses)
     print("Time", time.time() - start)

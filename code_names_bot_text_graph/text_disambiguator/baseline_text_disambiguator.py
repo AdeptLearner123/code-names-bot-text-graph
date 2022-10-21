@@ -1,6 +1,6 @@
-from .disambiguator import Disambiguator
+from .text_disambiguator import TextDisambiguator
 
-class BaselineDisambiguator(Disambiguator):
+class BaselineTextDisambiguator(TextDisambiguator):
     def disambiguate(self, token_senses):
         predicted_senses = []
 

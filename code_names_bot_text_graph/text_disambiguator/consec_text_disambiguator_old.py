@@ -7,21 +7,19 @@ from code_names_bot_text_graph.consec_old.pl_modules import ConsecPLModule
 from code_names_bot_text_graph.consec_old.consec_tokenizer import DeBERTaTokenizer
 from code_names_bot_text_graph.consec_old.consec_dataset import ConsecSample, ConsecDefinition, ConsecDataset
 from code_names_bot_text_graph.consec_old.disambiguation_corpora import DisambiguationInstance
-from .disambiguator import Disambiguator
+from .text_disambiguator import TextDisambiguator
 
 from config import CONSEC_MODEL_STATE
 
-class ConsecDisambiguator(Disambiguator):
+class ConsecTextDisambiguator(TextDisambiguator):
     def __init__(self, dictionary):
         super().__init__(dictionary)
 
         state_dict = torch.load(CONSEC_MODEL_STATE)
 
         self._module = ConsecPLModule()
-        #self._module.load_state_dict(state_dict)
         self._module.sense_extractor.load_state_dict(state_dict)
         self._module.eval()
-        #self._module.freeze()
         self._module.sense_extractor.evaluation_mode = True
 
         print("Saving")
@@ -120,7 +118,6 @@ class ConsecDisambiguator(Disambiguator):
             _, probs = next(self._predict(sample))
             sense_idxs = torch.tensor(probs).argsort(descending=True)
 
-            print("Token", token)
             for sense_idx in sense_idxs:
                 print(senses[sense_idx], probs[sense_idx])
 

@@ -1,12 +1,11 @@
 import torch
-import numpy as np
 
-from .disambiguator import Disambiguator
+from .text_disambiguator import TextDisambiguator
 from config import CONSEC_MODEL_STATE
 from code_names_bot_text_graph.consec.tokenizer import ConsecTokenizer
 from code_names_bot_text_graph.consec.sense_extractor import SenseExtractor
 
-class ConsecDisambiguator(Disambiguator):
+class ConsecTextDisambiguator(TextDisambiguator):
     def __init__(self, dictionary, debug_mode=False):
         super().__init__(dictionary)
 
@@ -20,7 +19,6 @@ class ConsecDisambiguator(Disambiguator):
     def _disambiguate_token(self, tokens, target_idx, candidate_senses, context_senses):
         candidate_definitions = [ self._get_definition(sense) for sense in candidate_senses ]
         context_definitions = [ (i, self._get_definition(sense)) for i, sense in context_senses ]
-        #context_definitions = []
 
         tokenizer_result = self._tokenizer.tokenize(tokens, target_idx, candidate_definitions, context_definitions)
         probs = self._sense_extractor.extract(*tokenizer_result)

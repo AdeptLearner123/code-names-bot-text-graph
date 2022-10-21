@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-class Disambiguator(ABC):
+class TextDisambiguator(ABC):
 
     def __init__(self, dictionary):
         self._dictionary = dictionary

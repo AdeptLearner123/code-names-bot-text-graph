@@ -1,7 +1,4 @@
-from config import SENSE_INVENTORY
-
-
-class SenseProposer:
+class TextSenseProposer:
     def __init__(self, sense_inventory):
         self._sense_inventory = sense_inventory
     
@@ -11,22 +8,16 @@ class SenseProposer:
         for i in range(len(token_tags) - length + 1):
             span = token_tags[i : i + length]
             span_tokens = [ token for token, _ in span ]
-            span_key = ' '.join(span_tokens)
 
-            if span_key in self._sense_inventory:
-                for _, senses in token_senses[i : i + length]:
-                    senses += self._sense_inventory[span_key]
+            for _, senses in token_senses[i : i + length]:
+                senses += self._sense_inventory.get_senses_from_tokens(span_tokens)
 
     def _assign_single_word_possibilities(self, token_tags, token_senses):
         for i, (token, tag) in enumerate(token_tags):
             if tag is None:
                 continue
-
-            key = f"{token}|{tag}"
-
-            if key in self._sense_inventory:
-                _, senses = token_senses[i]
-                senses += self._sense_inventory[key]
+            _, senses = token_senses[i]
+            senses += self._sense_inventory.get_senses_from_lemma(token, tag)
 
     def propose_senses(self, token_tags):
         token_senses = [(token, []) for token, _ in token_tags]

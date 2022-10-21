@@ -1,9 +1,10 @@
 from code_names_bot_text_graph.token_tagger.token_tagger import TokenTagger
-from code_names_bot_text_graph.sense_proposal.sense_proposer import SenseProposer
-from code_names_bot_text_graph.disambiguator.consec_disambiguator import ConsecDisambiguator
+from code_names_bot_text_graph.text_disambiguator.text_sense_proposer import TextSenseProposer
+from code_names_bot_text_graph.text_disambiguator.consec_text_disambiguator import ConsecTextDisambiguator
+from code_names_bot_text_graph.sense_inventory.sense_inventory import SenseInventory
 #from code_names_bot_text_graph.disambiguator.baseline_disambiguator import BaselineDisambiguator
 
-from config import TEXT_LIST, SENSE_LABELS, DICTIONARY, SENSE_INVENTORY
+from config import TEXT_LIST, TEXT_SENSE_LABELS, DICTIONARY, SENSE_INVENTORY
 
 import json
 from enum import Enum
@@ -46,14 +47,14 @@ def evaluate_text(text, token_tagger, sense_proposer, disambiguator, sense_label
 
 
 def main():
-    with open(SENSE_LABELS, "r") as file:
+    with open(TEXT_SENSE_LABELS, "r") as file:
         all_sense_labels = json.loads(file.read())
     
     with open(DICTIONARY, "r") as file:
         dictionary = json.loads(file.read())
 
     with open(SENSE_INVENTORY, "r") as file:
-        sense_inventory = json.loads(file.read())
+        sense_inventory_data = json.loads(file.read())
 
     with open(TEXT_LIST, "r") as file:
         lines = file.read().splitlines()
@@ -61,9 +62,10 @@ def main():
         text_dict = { line[0]: line[1] for line in lines }
 
     token_tagger = TokenTagger()
-    sense_proposer = SenseProposer(sense_inventory)
+    sense_inventory = SenseInventory(sense_inventory_data)
+    sense_proposer = TextSenseProposer(sense_inventory)
     #disambiguator = BaselineDisambiguator(dictionary)
-    disambiguator = ConsecDisambiguator(dictionary)
+    disambiguator = ConsecTextDisambiguator(dictionary)
 
     total_correct = 0
     total_incorrect = 0
@@ -73,7 +75,6 @@ def main():
         sense_labels = all_sense_labels[text_id]
         text = text_dict[text_id]
 
-        print("Testing", text_id)
         correct, errors = evaluate_text(text, token_tagger, sense_proposer, disambiguator, sense_labels, dictionary)
         
         total_correct += correct

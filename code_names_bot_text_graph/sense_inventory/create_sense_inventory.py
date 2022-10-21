@@ -16,12 +16,14 @@ def main():
         lemma_forms = [entry["lemma"]] + entry["variants"]
         pos = entry["pos"]
         for lemma_form in lemma_forms:
-            lemma_tokens = [ token for token, _ in token_tagger.tokenize_tag(lemma_form) ]
-            # Only match by pos if lemma is single token
-            lemma_key = f"{lemma_tokens[0]}|{pos}" if len(lemma_tokens) == 1 else ' '.join(lemma_tokens)
+            lemma_key = f"{lemma_form}|{pos}"
             if lemma_key not in lemma_senses:
-                lemma_senses[lemma_key] = []
-            lemma_senses[lemma_key].append(sense_id)
+                lemma_tokens = [ token for token, _ in token_tagger.tokenize_tag(lemma_form) ]
+                lemma_senses[lemma_key] = {
+                    "senses": [],
+                    "tokens": lemma_tokens
+                }
+            lemma_senses[lemma_key]["senses"].append(sense_id)
 
     print("Status:", "writing")
     with open(SENSE_INVENTORY, "w+") as file:
