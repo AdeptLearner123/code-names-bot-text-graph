@@ -29,6 +29,7 @@ extract-texts                           = "code_names_bot_text_graph.text_extrac
 create-sense-inventory                  = "code_names_bot_text_graph.sense_proposal.create_sense_inventory:main"
 
 labeler                                 = "code_names_bot_text_graph.labeler.labeler:main"
+synonym-labeler                         = "code_names_bot_text_graph.synonym_labeler.synonym_labeler:main"
 evaluate                                = "code_names_bot_text_graph.evaluation.evaluate:main"
 
 [build-system]
