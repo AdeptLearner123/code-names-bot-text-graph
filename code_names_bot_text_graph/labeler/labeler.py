@@ -23,18 +23,19 @@ class Labeler(ABC):
         curr_key = self._keys[self._current]
         self._save_labels(curr_key)
         self._current = min(self._current + 1, len(self._keys) - 1)
+        print(self._current)
         self._update(self._keys[self._current])
 
     @Slot()
     def _prev_handler(self):
         curr_key = self._keys[self._current]
         self._save_labels(curr_key)
-        self._current = max(len(self._keys) - 1, 0)
+        self._current = max(self._current - 1, 0)
         self._update(self._keys[self._current])
 
-    def start(self, keys):
+    def start(self, keys, start=0):
         self._keys = keys
-        self._current = 0
+        self._current = start
 
         app = QtWidgets.QApplication([])
 

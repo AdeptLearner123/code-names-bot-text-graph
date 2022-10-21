@@ -39,7 +39,6 @@ class TextLabeler(Labeler):
             definitions_list.append([ self._dictionary[sense]["definition"] for sense in senses ])
 
         labels = self._labels[current_key] if current_key in self._labels else [None] * len(tokens)
-        print("Labels", labels)
         self._window.set_text(title, tokens, senses_list, definitions_list, labels, predicted_senses)
 
     def _save_labels(self, current_key):
@@ -65,9 +64,8 @@ def read_text_dict():
 
 
 def save_labels(sense_labels):
-    pass
-    #with open(TEXT_SENSE_LABELS, "w+") as file:
-    #    file.write(json.dumps(sense_labels, sort_keys=True, indent=4, ensure_ascii=False))
+    with open(TEXT_SENSE_LABELS, "w+") as file:
+        file.write(json.dumps(sense_labels, sort_keys=True, indent=4, ensure_ascii=False))
 
 
 def read_sense_inventory():
@@ -95,7 +93,7 @@ def main():
         random.seed(0)
         random.shuffle(keys)
 
-    labeler.start(keys)
+    labeler.start(keys, 30)
 
 if __name__ == "__main__":
     main()
