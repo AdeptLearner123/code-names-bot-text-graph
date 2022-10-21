@@ -1,0 +1,484 @@
+{
+    "m_en_gbus0053730.005": {
+        "amazing": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "astonishing": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "bewildering": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "breathtaking": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "impressive": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "shocking": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "staggering": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "striking": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "stunning": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "stupefying": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "surprising": {
+            "sense": null,
+            "type": "SYN"
+        }
+    },
+    "m_en_gbus0074250.008": {
+        "target": {
+            "sense": "m_en_gbus1031400.009",
+            "type": "CLASS"
+        }
+    },
+    "m_en_gbus0180960.008": {
+        "nautical": {
+            "sense": null,
+            "type": "DOMAIN"
+        },
+        "sailor": {
+            "sense": null,
+            "type": "CLASS"
+        }
+    },
+    "m_en_gbus0215590.010": {
+        "art": {
+            "sense": "m_en_gbus0048940.006",
+            "type": "DOMAIN"
+        },
+        "difference": {
+            "sense": "m_en_gbus0274550.017",
+            "type": "CLASS"
+        }
+    },
+    "m_en_gbus0216510.027": {
+        "psychiatry": {
+            "sense": "m_en_gbus0825820.007",
+            "type": "DOMAIN"
+        },
+        "psychological_phenomenon": {
+            "sense": null,
+            "type": "CLASS"
+        }
+    },
+    "m_en_gbus0239810.022": {
+        "certifiable": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "crazed": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "delirious": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "demented": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "deranged": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "distracted": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "distraught": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "disturbed": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "frantic": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "frenzied": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "hysterical": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "insane": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "lunatic": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "mad": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "mad as a March hare": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "mad as a hatter": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "maniac": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "maniacal": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "manic": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "mentally ill": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "not in one's right mind": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "not together": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "of unsound mind": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "out of one's mind": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "raving": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "severely mentally ill": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "stark mad": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "unbalanced": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "unhinged": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "unstable": {
+            "sense": null,
+            "type": "SYN"
+        }
+    },
+    "m_en_gbus0259110.025": {
+        "law": {
+            "sense": "m_en_gbus0568760.007",
+            "type": "DOMAIN"
+        }
+    },
+    "m_en_gbus0292440.035": {
+        "clone": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "copy": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "counterpart": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "duplicate": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "exact likeness": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "facsimile": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "fellow": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "image": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "imitation": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "living image": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "lookalike": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "match": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "mate": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "mirror image": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "perfect likeness": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "physical_person": {
+            "sense": null,
+            "type": "CLASS"
+        },
+        "picture": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "replica": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "twin": {
+            "sense": null,
+            "type": "SYN"
+        }
+    },
+    "m_en_gbus0354420.005": {
+        "hairdressing": {
+            "sense": "m_en_gbus0444530.005",
+            "type": "DOMAIN"
+        }
+    },
+    "m_en_gbus0415490.007": {
+        "as pleased as Punch": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "cock-a-hoop": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "delighted": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "eager": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "elated": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "gleeful": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "happy": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "like a child with a new toy": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "like a dog with two tails": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "more than willing": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "overjoyed": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "pleased": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "thrilled": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "well pleased": {
+            "sense": null,
+            "type": "SYN"
+        }
+    },
+    "m_en_gbus0457560.005": {
+        "food": {
+            "sense": "m_en_gbus0378040.005",
+            "type": "DOMAIN"
+        },
+        "vegetable": {
+            "sense": "m_en_gbus1122530.009",
+            "type": "CLASS"
+        }
+    },
+    "m_en_gbus0460970.030": {
+        "computer_graphic": {
+            "sense": null,
+            "type": "CLASS"
+        },
+        "computing": {
+            "sense": "m_en_gbus0207490.005",
+            "type": "DOMAIN"
+        }
+    },
+    "m_en_gbus0573160.004": {
+        "storeroom": {
+            "sense": "m_en_gbus0999130.008",
+            "type": "CLASS"
+        }
+    },
+    "m_en_gbus0719540.003": {
+        "art": {
+            "sense": "m_en_gbus0048940.006",
+            "type": "DOMAIN"
+        },
+        "exhibition": {
+            "sense": "m_en_gbus0340990.006",
+            "type": "CLASS"
+        }
+    },
+    "m_en_gbus0751280.006": {
+        "greek_history": {
+            "sense": null,
+            "type": "DOMAIN"
+        },
+        "structure": {
+            "sense": "m_en_gbus1004190.018",
+            "type": "CLASS"
+        }
+    },
+    "m_en_gbus1007500.011": {
+        "dive": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "drop": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "go down": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "go under water": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "plummet": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "plunge": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "sink": {
+            "sense": null,
+            "type": "SYN"
+        }
+    },
+    "m_en_gbus1085420.033": {
+        "blink": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "dazzle": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "flash": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "flicker": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "gleam": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "glimmer": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "glint": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "glitter": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "illumination": {
+            "sense": "m_en_gbus0496080.006",
+            "type": "CLASS"
+        },
+        "shimmer": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "sparkle": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "twinkling": {
+            "sense": null,
+            "type": "SYN"
+        },
+        "wink": {
+            "sense": null,
+            "type": "SYN"
+        }
+    }
+}
