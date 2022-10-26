@@ -24,7 +24,7 @@ class TextLabeler(Labeler):
         # Extract sense id from text id so that we can display the lemma in the title
         current_sense_id = current_key.replace("_def", "|").replace("_text", "|").split("|")[0]
         current_lemma = self._dictionary[current_sense_id]["lemma"]
-        title = f"{current_lemma} -- {current_key}"
+        title = f"{self._current}: {current_lemma} -- {current_key}"
 
         text = self._text_dict[current_key]
         token_tags = self._token_tagger.tokenize_tag(text)
@@ -93,7 +93,7 @@ def main():
         random.seed(0)
         random.shuffle(keys)
 
-    labeler.start(keys)
+    labeler.start(keys, start=8)
 
 if __name__ == "__main__":
     main()

@@ -3,7 +3,7 @@ import random
 import json
 
 from code_names_bot_text_graph.sense_inventory.sense_inventory import SenseInventory
-from code_names_bot_text_graph.sem_link_disambiguator.mixed_sem_link_disambiguator import MixedSemLinkDisambiguator
+from code_names_bot_text_graph.sem_link_disambiguator.mixed_sem_link_disambiguator import ConsecSemLinkDisambiguator
 from code_names_bot_text_graph.sem_link_disambiguator.sem_link_sense_proposer import SemLinkSenseProposer
 from config import DICTIONARY, SEM_LINK_SENSE_LABELS, SENSE_INVENTORY
 from .sem_link_labeler_window import SemLinkLabelerWindow
@@ -84,7 +84,7 @@ def main():
 
     sense_inventory = SenseInventory(sense_inventory_data)
     sem_link_sense_proposer = SemLinkSenseProposer(dictionary, sense_inventory)
-    sem_link_disambiguator = MixedSemLinkDisambiguator(dictionary)
+    sem_link_disambiguator = ConsecSemLinkDisambiguator(dictionary)
     labeler = SemLinkLabeler(sem_link_sense_proposer, sem_link_disambiguator, SemLinkLabelerWindow, dictionary, sense_labels, save_labels)
 
     if len(sys.argv) > 1 and sys.argv[1] == "-l":

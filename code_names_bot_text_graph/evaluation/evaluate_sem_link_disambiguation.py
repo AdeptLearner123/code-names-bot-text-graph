@@ -1,5 +1,5 @@
 from code_names_bot_text_graph.sense_inventory.sense_inventory import SenseInventory
-from code_names_bot_text_graph.sem_link_disambiguator.mixed_sem_link_disambiguator import MixedSemLinkDisambiguator
+from code_names_bot_text_graph.sem_link_disambiguator.mixed_sem_link_disambiguator import ConsecSemLinkDisambiguator
 from code_names_bot_text_graph.sem_link_disambiguator.sem_link_sense_proposer import SemLinkSenseProposer
 
 from config import SEM_LINK_SENSE_LABELS, DICTIONARY, SENSE_INVENTORY
@@ -20,7 +20,7 @@ def main():
 
     sense_inventory = SenseInventory(sense_inventory_data)
     sem_link_sense_proposer = SemLinkSenseProposer(dictionary, sense_inventory)
-    disambiguator = MixedSemLinkDisambiguator(dictionary)
+    disambiguator = ConsecSemLinkDisambiguator(dictionary)
 
     total_correct = 0
     errors = set()

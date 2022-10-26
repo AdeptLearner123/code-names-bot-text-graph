@@ -25,8 +25,12 @@ test-spacy                              = "tests.test_spacy:main"
 test-consec                             = "tests.test_consec:main"
 test-consec-old                         = "tests.test_consec_old:main"
 
+list-domain-classes                     = "tools.list_domains_classes:main"
+
 extract-texts                           = "code_names_bot_text_graph.text_extraction.extract_texts:main"
 create-sense-inventory                  = "code_names_bot_text_graph.sense_inventory.create_sense_inventory:main"
+
+create-domain-class-to-sense            = "code_names_bot_text_graph.sem_link_disambiguator.create_domain_class_to_sense:main"
 
 text-labeler                            = "code_names_bot_text_graph.labeler.text_labeler:main"
 sem-link-labeler                        = "code_names_bot_text_graph.labeler.sem_link_labeler:main"
