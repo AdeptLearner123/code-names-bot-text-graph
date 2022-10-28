@@ -19,7 +19,7 @@ class TokenTagger():
 
     def _get_token_tag(self, token):
         if token.is_stop:
-            return None
+            return "STOP"
 
         if token.pos_ in self.SPACY_POS_TO_TAG:
             return self.SPACY_POS_TO_TAG[token.pos_]

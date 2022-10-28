@@ -26,6 +26,7 @@ test-consec                             = "tests.test_consec:main"
 test-consec-old                         = "tests.test_consec_old:main"
 
 list-domain-classes                     = "tools.list_domains_classes:main"
+set-labels                              = "tools.set_labels:main"
 
 extract-texts                           = "code_names_bot_text_graph.text_extraction.extract_texts:main"
 create-sense-inventory                  = "code_names_bot_text_graph.sense_inventory.create_sense_inventory:main"

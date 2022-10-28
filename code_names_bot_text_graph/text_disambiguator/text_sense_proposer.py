@@ -35,11 +35,11 @@ class TextSenseProposer:
             token_tags, token_senses
         )
 
-        # Tokens with None tag (stop word) should not have any senses.
+        # Tokens that are stop words should not have any senses.
         # Otherwise compound words that conatin stop words will always have the stop word assigned to that sense.
         # Ex: The sense for "come to" will always have "to" disambiguated to that sense, even if "come to" is not the right sense for "come".
         for i, (token, tag) in enumerate(token_tags):
-            if tag is None:
+            if tag == "STOP":
                 token_senses[i] = (token, [])
 
         # Remove duplicates

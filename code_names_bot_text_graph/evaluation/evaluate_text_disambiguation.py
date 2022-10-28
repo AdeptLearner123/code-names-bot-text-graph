@@ -1,6 +1,6 @@
 from code_names_bot_text_graph.token_tagger.token_tagger import TokenTagger
 from code_names_bot_text_graph.text_disambiguator.text_sense_proposer import TextSenseProposer
-#from code_names_bot_text_graph.text_disambiguator.consec_text_disambiguator import ConsecTextDisambiguator
+from code_names_bot_text_graph.text_disambiguator.consec_text_disambiguator import ConsecTextDisambiguator
 from code_names_bot_text_graph.text_disambiguator.consec_compound_text_disambiguator import ConsecCompoundTextDisambiguator
 from code_names_bot_text_graph.sense_inventory.sense_inventory import SenseInventory
 #from code_names_bot_text_graph.disambiguator.baseline_disambiguator import BaselineDisambiguator
@@ -65,6 +65,7 @@ def main():
     token_tagger = TokenTagger()
     sense_inventory = SenseInventory(sense_inventory_data)
     sense_proposer = TextSenseProposer(sense_inventory)
+    #disambiguator = ConsecTextDisambiguator(dictionary)
     #disambiguator = BaselineDisambiguator(dictionary)
     disambiguator = ConsecCompoundTextDisambiguator(dictionary)
 
