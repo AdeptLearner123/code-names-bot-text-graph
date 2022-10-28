@@ -1,7 +1,7 @@
 from .text_disambiguator import TextDisambiguator
 
 class BaselineTextDisambiguator(TextDisambiguator):
-    def disambiguate(self, token_senses):
+    def disambiguate(self, token_senses, compound_indices):
         predicted_senses = []
 
         for _, senses in token_senses:

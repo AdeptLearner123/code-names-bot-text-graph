@@ -31,7 +31,7 @@ class ConsecTextDisambiguator(TextDisambiguator):
         sense_idx = torch.argmax(torch.tensor(probs))
         return candidate_senses[sense_idx]
 
-    def disambiguate(self, token_senses):
+    def disambiguate(self, token_senses, compound_indices):
         tokens = [ token for token, _ in token_senses ]
         token_polysemy = [ len(senses) for _, senses in token_senses ]
         disambiguation_order = torch.tensor(token_polysemy).argsort()

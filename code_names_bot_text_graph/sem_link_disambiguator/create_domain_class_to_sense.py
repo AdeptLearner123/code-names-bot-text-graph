@@ -6,6 +6,8 @@ from code_names_bot_text_graph.sense_inventory.sense_inventory import SenseInven
 from config import DICTIONARY, DOMAIN_TO_SENSE, CLASS_TO_SENSE
 
 
+POS_ORDER = ["proper", "noun", "adjective", "verb"]
+
 def get_all_sem_links(dictionary):
     domains = set()
     classes = set()
@@ -20,11 +22,14 @@ def get_sense_possibilities(dictionary, domains, classes):
     class_senses = dict()
 
     for domain in domains:
-        domain_senses[domain.lower()] = []
+        domain_senses[domain] = []
     for class_lemma in classes:
-        class_senses[class_lemma.lower()] = []
+        class_senses[class_lemma] = []
 
     for sense_id, entry in tqdm(dictionary.items()):
+        if entry["pos"] not in POS_ORDER:
+            continue
+
         lemma = entry["lemma"]
         lemma_variants = set([ lemma.lower() ] + [ variant.lower() for variant in entry["variants"] ] + [ derivative.lower() for derivative in entry["derivatives"] ])
 
@@ -45,16 +50,19 @@ def select_sense(dictionary, sem_link, senses, is_domain):
     for sense in senses:
         entry = dictionary[sense]
 
-        if sem_link in entry[key]:
-            return sense
-
         if entry["source"] != "OX":
             continue
 
         metadata = entry["meta"]
-        if "is_subsense" not in metadata or not metadata["is_subsense"]:
-            candidates.append((sense, (metadata["sense_idx"], metadata["sentence_count"])))
+        if "is_subsense" in metadata and metadata["is_subsense"]:
+            continue
+
+        direct_link = sem_link in entry[key]
+        candidates.append((sense, (not direct_link, POS_ORDER.index(entry["pos"]), metadata["sense_idx"], metadata["sentence_count"])))
     
+    if sem_link == "gaming":
+        print(candidates)
+        print(sorted(candidates))
     candidates = sorted(candidates, key=lambda candidate: candidate[1])
     if len(candidates) > 0:
         sense, _ = candidates[0]

@@ -17,10 +17,13 @@ def main():
     sense_proposer = TextSenseProposer(sense_inventory)
 
     token_tags = token_tagger.tokenize_tag(sys.argv[1])
-    token_senses = sense_proposer.propose_senses(token_tags)
+    token_senses, compound_indices = sense_proposer.propose_senses(token_tags)
 
     for token, senses in token_senses:
         print(token, senses)
+    
+    for sense, indices in compound_indices:
+        print(sense, indices)
 
 
 if __name__ == "__main__":

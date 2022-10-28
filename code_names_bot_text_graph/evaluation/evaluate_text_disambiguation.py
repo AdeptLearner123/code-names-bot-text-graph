@@ -1,6 +1,7 @@
 from code_names_bot_text_graph.token_tagger.token_tagger import TokenTagger
 from code_names_bot_text_graph.text_disambiguator.text_sense_proposer import TextSenseProposer
-from code_names_bot_text_graph.text_disambiguator.consec_text_disambiguator import ConsecTextDisambiguator
+#from code_names_bot_text_graph.text_disambiguator.consec_text_disambiguator import ConsecTextDisambiguator
+from code_names_bot_text_graph.text_disambiguator.consec_compound_text_disambiguator import ConsecCompoundTextDisambiguator
 from code_names_bot_text_graph.sense_inventory.sense_inventory import SenseInventory
 #from code_names_bot_text_graph.disambiguator.baseline_disambiguator import BaselineDisambiguator
 
@@ -20,8 +21,8 @@ class ErrorReason(Enum):
 
 def evaluate_text(text, token_tagger, sense_proposer, disambiguator, sense_labels, dictionary):
     token_tags = token_tagger.tokenize_tag(text)
-    token_senses = sense_proposer.propose_senses(token_tags)
-    predicted_senses = disambiguator.disambiguate(token_senses)
+    token_senses, compound_indices = sense_proposer.propose_senses(token_tags)
+    predicted_senses = disambiguator.disambiguate(token_senses, compound_indices)
 
     correct = 0
     errors = defaultdict(lambda: [])
@@ -65,7 +66,7 @@ def main():
     sense_inventory = SenseInventory(sense_inventory_data)
     sense_proposer = TextSenseProposer(sense_inventory)
     #disambiguator = BaselineDisambiguator(dictionary)
-    disambiguator = ConsecTextDisambiguator(dictionary)
+    disambiguator = ConsecCompoundTextDisambiguator(dictionary)
 
     total_correct = 0
     total_incorrect = 0

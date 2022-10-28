@@ -9,6 +9,8 @@ TEXT_LIST = "output/text_list.txt"
 DICTIONARY_TEXT_LINKED = "output/dictionary_text_linked.json"
 
 TEXT_SENSE_LABELS = "output/text_sense_labels.json"
-SEM_LINK_SENSE_LABELS = "output/sem_link_sense_labels.json"
+SYNONYM_LABELS = "output/synonym_labels.json"
+DOMAIN_LABELS = "output/domain_labels.json"
+CLASS_LABELS = "output/class_labels.json"
 
 CONSEC_MODEL_STATE = "model_states/consec_semcor_normal_best_sense_extractor.pt"

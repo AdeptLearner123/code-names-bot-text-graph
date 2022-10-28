@@ -5,6 +5,7 @@ import json
 from code_names_bot_text_graph.text_disambiguator.text_sense_proposer import TextSenseProposer
 from code_names_bot_text_graph.token_tagger.token_tagger import TokenTagger
 from code_names_bot_text_graph.text_disambiguator.consec_text_disambiguator import ConsecTextDisambiguator
+from code_names_bot_text_graph.text_disambiguator.consec_compound_text_disambiguator import ConsecCompoundTextDisambiguator
 from code_names_bot_text_graph.sense_inventory.sense_inventory import SenseInventory
 from config import DICTIONARY, TEXT_SENSE_LABELS, TEXT_LIST, SENSE_INVENTORY
 from .text_labeler_window import TextLabelerWindow
@@ -28,8 +29,8 @@ class TextLabeler(Labeler):
 
         text = self._text_dict[current_key]
         token_tags = self._token_tagger.tokenize_tag(text)
-        token_senses = self._sense_proposer.propose_senses(token_tags)
-        predicted_senses = self._disambiguator.disambiguate(token_senses)
+        token_senses, compound_indices = self._sense_proposer.propose_senses(token_tags)
+        predicted_senses = self._disambiguator.disambiguate(token_senses, compound_indices)
 
         tokens, senses_list, definitions_list = [], [], []
         
@@ -82,7 +83,7 @@ def main():
     token_tagger = TokenTagger()
     sense_inventory = SenseInventory(sense_inventory_data)
     sense_proposer = TextSenseProposer(sense_inventory)
-    disambiguator = ConsecTextDisambiguator(dictionary)
+    disambiguator = ConsecCompoundTextDisambiguator(dictionary)
     labeler = TextLabeler(token_tagger, sense_proposer, disambiguator, TextLabelerWindow, text_dict, dictionary, sense_labels, save_labels)
 
 

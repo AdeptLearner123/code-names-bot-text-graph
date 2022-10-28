@@ -1,26 +1,18 @@
-from PySide6 import QtWidgets
-from PySide6.QtCore import Signal, Qt
 from .labeler_window import LabelerWindow
 
 class SemLinkLabelerWindow(LabelerWindow):
     def _render_text(self):
-        text_content = f"<p>{self._definition}</p>"
+        token = self._tokens[0]
+        text_content = f"<p>{token}</p>"
         text_content += "<ul>"
-        for i, (token, token_type) in enumerate(zip(self._tokens, self._token_types)):
-            token_text = f"[{token_type}]  {token}"
-            if i == self._current:
-                token_text = f"<u>{token_text}</u>"
-            text_content += f"<li>{token_text}</li>"
-
+        for example in self._examples:
+            text_content += f"<li>{example}</li>"
+        text_content += "<ul>"
         self._text.setText(text_content)
 
-    def get_tokens(self):
-        return self._tokens
-    
-    def get_token_types(self):
-        return self._token_types
+    def get_label(self):
+        return self._labels[0]
 
-    def set_text(self, title, definition, tokens, token_types, senses, definitions, labels, predicted_senses):
-        self._definition = definition
-        self._token_types = token_types
-        super().set_text(title, tokens, senses, definitions, labels, predicted_senses)
+    def set_text(self, title, token, senses, definitions, label, predicted_sense, examples):
+        self._examples = examples
+        super().set_text(title, [token], [senses], [definitions], [label], [predicted_sense])

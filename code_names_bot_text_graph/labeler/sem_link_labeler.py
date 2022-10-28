@@ -3,52 +3,40 @@ import random
 import json
 
 from code_names_bot_text_graph.sense_inventory.sense_inventory import SenseInventory
-from code_names_bot_text_graph.sem_link_disambiguator.mixed_sem_link_disambiguator import ConsecSemLinkDisambiguator
-from code_names_bot_text_graph.sem_link_disambiguator.sem_link_sense_proposer import SemLinkSenseProposer
-from config import DICTIONARY, SEM_LINK_SENSE_LABELS, SENSE_INVENTORY
+from code_names_bot_text_graph.synonym_disambiguator.synonym_disambiguator import SynonymDisambiguator
+from config import DICTIONARY, DOMAIN_LABELS, CLASS_LABELS, DOMAIN_TO_SENSE, CLASS_TO_SENSE, SENSE_INVENTORY
 from .sem_link_labeler_window import SemLinkLabelerWindow
 from .labeler import Labeler
 
 class SemLinkLabeler(Labeler):
-    def __init__(self, sem_link_sense_proposer, sem_link_disambiguator, window, dictionary, labels, save_labels_handler):
+    def __init__(self, sense_inventory, predictions, labels, window, dictionary, key, save_labels_handler):
         super().__init__(window, save_labels_handler)
-        self._sem_link_sense_proposer = sem_link_sense_proposer
-        self._sem_link_disambiguator = sem_link_disambiguator
+        self._sense_inventory = sense_inventory
         self._dictionary = dictionary
+        self._predictions = predictions
         self._labels = labels
+        self._key = key
 
-    def _update(self, current_key):
-        current_lemma = self._dictionary[current_key]["lemma"]
-        title = f"{current_lemma} -- {current_key}"
-        definition = self._dictionary[current_key]["definition"]
+    def _update(self, current_lemma):
+        title = f"{self._current}: {current_lemma}"
 
-        synonyms = self._dictionary[current_key]["synonyms"]
-        domains = self._dictionary[current_key]["domains"]
-        classes = self._dictionary[current_key]["classes"]
+        senses = self._sense_inventory.get_senses_from_lemma_ignore_case(current_lemma)
+        definitions = [ self._dictionary[sense]["definition"] for sense in senses ]
+        prediction = self._predictions[current_lemma]
+        label = self._labels[current_lemma] if current_lemma in self._labels else None
 
-        linked_lemmas = synonyms + domains + classes
-        link_types = ["SYN"] * len(synonyms) + ["DOMAIN"] * len(domains) + ["CLASS"] * len(classes)
-        senses_list, predicted_senses, definitions_list, labels = [], [], [], []
-        for link_lemma, link_type in zip(linked_lemmas, link_types):
-            link_senses = self._sem_link_sense_proposer.propose_senses(current_key, link_lemma, link_type)
-            senses_list.append(link_senses)
-            predicted_senses.append(self._sem_link_disambiguator.disambiguate(current_key, link_senses, link_type))
-            definitions_list.append([ self._dictionary[sense]["definition"] for sense in link_senses ])
-            
-            if current_key in self._labels and link_lemma in self._labels[current_key]:
-                labels.append(self._labels[current_key][link_lemma]["sense"])
-            else:
-                labels.append(None)
+        examples = []
+        for entry in self._dictionary.values():
+            if current_lemma in entry[self._key]:
+                examples.append(entry["lemma"])
+                if len(examples) > 3:
+                    break
 
-        self._window.set_text(title, definition, linked_lemmas, link_types, senses_list, definitions_list, labels, predicted_senses)
+        self._window.set_text(title, current_lemma, senses, definitions, label, prediction, examples)
 
-    def _save_labels(self, current_key):
-        labels = self._window.get_labels()
-        tokens = self._window.get_tokens()
-        token_types = self._window.get_token_types()
-
-        labels_dict = { token: { "type": token_type, "sense": sense } for token, token_type, sense in zip(tokens, token_types, labels) }
-        self._labels[current_key] = labels_dict
+    def _save_labels(self, current_lemma):
+        label = self._window.get_label()
+        self._labels[current_lemma] = label
         self._save_labels_handler(self._labels)
 
 
@@ -57,13 +45,13 @@ def read_dictionary():
         return json.loads(file.read())
 
 
-def read_labels():
-    with open(SEM_LINK_SENSE_LABELS, "r") as file:
+def read_json(file):
+    with open(file, "r") as file:
         return json.loads(file.read())
 
 
-def save_labels(sense_labels):
-    with open(SEM_LINK_SENSE_LABELS, "w+") as file:
+def save_labels(labels_file, sense_labels):
+    with open(labels_file, "w+") as file:
         file.write(json.dumps(sense_labels, sort_keys=True, indent=4, ensure_ascii=False))
 
 
@@ -72,29 +60,28 @@ def read_sense_inventory():
         return json.loads(file.read())
 
 
-def sense_has_synonyms(sense_id, dictionary):
-    entry = dictionary[sense_id]
-    return len(entry["synonyms"]) > 0 or len(entry["domains"]) > 0 or len(entry["classes"]) > 0
-
-
-def main():
+def label(labels_file, predictions_file, key):
     dictionary = read_dictionary()
-    sense_labels = read_labels()
+    sense_labels = read_json(labels_file)
+    predictions = read_json(predictions_file)
     sense_inventory_data = read_sense_inventory()
 
     sense_inventory = SenseInventory(sense_inventory_data)
-    sem_link_sense_proposer = SemLinkSenseProposer(dictionary, sense_inventory)
-    sem_link_disambiguator = ConsecSemLinkDisambiguator(dictionary)
-    labeler = SemLinkLabeler(sem_link_sense_proposer, sem_link_disambiguator, SemLinkLabelerWindow, dictionary, sense_labels, save_labels)
+    save_labels_handler = lambda labels: save_labels(labels_file, labels)
+    labeler = SemLinkLabeler(sense_inventory, predictions, sense_labels, SemLinkLabelerWindow, dictionary, key, save_labels_handler)
 
     if len(sys.argv) > 1 and sys.argv[1] == "-l":
         keys = list(sense_labels.keys())
     else:
-        keys = list(dictionary.keys())
-        keys = [ sense_id for sense_id in keys if sense_has_synonyms(sense_id, dictionary)]
+        keys = list(predictions.keys())
         random.seed(0)
         random.shuffle(keys)
     labeler.start(keys)
 
-if __name__ == "__main__":
-    main()
+
+def label_domains():
+    label(DOMAIN_LABELS, DOMAIN_TO_SENSE, "domains")
+
+
+def label_classes():
+    label(CLASS_LABELS, CLASS_TO_SENSE, "classes")
