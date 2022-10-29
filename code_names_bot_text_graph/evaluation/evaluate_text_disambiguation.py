@@ -18,7 +18,7 @@ class ErrorReason(Enum):
     MISSING_PROPOSAL = 2
     INCORRECT_DISAMBIGUATION = 3
 
-BATCH_SIZE = 1 #10
+BATCH_SIZE = 10
 
 def evaluate_text(text, token_tagger, sense_proposer, disambiguator, sense_labels, dictionary):
     token_tags = token_tagger.tokenize_tag(text)
