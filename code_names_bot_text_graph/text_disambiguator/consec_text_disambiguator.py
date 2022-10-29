@@ -15,6 +15,9 @@ class ConsecTextDisambiguator(TextDisambiguator):
         self._sense_extractor = SenseExtractor()
         self._sense_extractor.load_state_dict(state_dict)
         self._sense_extractor.eval()
+
+        if torch.cuda.is_available():
+            self._sense_extractor.cuda()
     
     def _get_disambiguation_order(self, token_senses):
         disambiguated_senses = [None] * len(token_senses)
@@ -49,6 +52,17 @@ class ConsecTextDisambiguator(TextDisambiguator):
 
         return disambiguation_instance.get_disambiguated_senses()
 
+    def _send_inputs_to_cuda(self, inputs):
+        (input_ids, attention_mask, token_types, relative_pos, def_mask, def_pos) = inputs
+
+        input_ids = input_ids.cuda()
+        attention_mask = attention_mask.cuda()
+        token_types = token_types.cuda()
+        relative_pos = relative_pos.cuda()
+        def_mask = def_mask.cuda()
+
+        return (input_ids, attention_mask, token_types, relative_pos, def_mask, def_pos)
+
     def batch_disambiguate(self, token_senses_compound_indices_list):
         instances = [ ConsecDisambiguationInstance(self._dictionary, token_senses, compound_indices) for token_senses, compound_indices in token_senses_compound_indices_list]
 
@@ -64,6 +78,10 @@ class ConsecTextDisambiguator(TextDisambiguator):
             for instance in instances:
                 if not instance.is_finished():
                     inputs, (senses, _) = instance.get_next_input()
+
+                    if torch.cuda.is_available():
+                        inputs = self._send_inputs_to_cuda(inputs)
+
                     active_instances.append(instance)
                     inputs_list.append(inputs)
                     senses_list.append(senses)
