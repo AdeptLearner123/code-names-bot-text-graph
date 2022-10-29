@@ -1,10 +1,10 @@
-from .tokenizer import ConsecTokenizer
 import torch
 
 from .text_disambiguator import TextDisambiguator
 from config import CONSEC_MODEL_STATE
 from code_names_bot_text_graph.consec.disambiguation_instance import ConsecDisambiguationInstance
 from code_names_bot_text_graph.consec.sense_extractor import SenseExtractor
+from code_names_bot_text_graph.consec.tokenizer import ConsecTokenizer
 
 class ConsecTextDisambiguator(TextDisambiguator):
     def __init__(self, dictionary, debug_mode=False):
