@@ -1,18 +1,16 @@
-from .tokenizer import ConsecTokenizer
-
 class ConsecDisambiguationInstance:
     """
     Represents a single piece of text being disambiguated by Consec.
     Generates the Consec inputs sequentially in order of increasing polysemy.
     """
 
-    def __init__(self, dictionary, token_senses, compound_indices):
+    def __init__(self, dictionary, tokenizer, token_senses, compound_indices):
         self._dictionary = dictionary
         self._token_senses = token_senses
         self._compound_indices = compound_indices
         self._set_disambiguation_order()
         self._current = 0
-        self._tokenizer = ConsecTokenizer()
+        self._tokenizer = tokenizer
         self._tokens = [ token for token, _ in token_senses ]
 
     def _get_definition(self, sense):

@@ -1,4 +1,4 @@
-from lib2to3.pgen2 import token
+from .tokenizer import ConsecTokenizer
 import torch
 
 from .text_disambiguator import TextDisambiguator
@@ -15,6 +15,7 @@ class ConsecTextDisambiguator(TextDisambiguator):
         self._sense_extractor = SenseExtractor()
         self._sense_extractor.load_state_dict(state_dict)
         self._sense_extractor.eval()
+        self._tokenizer = ConsecTokenizer()
 
         if torch.cuda.is_available():
             self._sense_extractor.cuda()
@@ -36,7 +37,7 @@ class ConsecTextDisambiguator(TextDisambiguator):
         return disambiguated_senses, disambiguation_order
 
     def disambiguate(self, token_senses, compound_indices):
-        disambiguation_instance = ConsecDisambiguationInstance(self._dictionary, token_senses, compound_indices)
+        disambiguation_instance = ConsecDisambiguationInstance(self._dictionary, self._tokenizer, token_senses, compound_indices)
 
         while not disambiguation_instance.is_finished():
             input, (senses, definitions) = disambiguation_instance.get_next_input()
@@ -64,7 +65,7 @@ class ConsecTextDisambiguator(TextDisambiguator):
         return (input_ids, attention_mask, token_types, relative_pos, def_mask, def_pos)
 
     def batch_disambiguate(self, token_senses_compound_indices_list):
-        instances = [ ConsecDisambiguationInstance(self._dictionary, token_senses, compound_indices) for token_senses, compound_indices in token_senses_compound_indices_list]
+        instances = [ ConsecDisambiguationInstance(self._dictionary, self._tokenizer, token_senses, compound_indices) for token_senses, compound_indices in token_senses_compound_indices_list]
 
         round = 0
         while any([ not instance.is_finished() for instance in instances ]):
