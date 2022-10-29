@@ -43,7 +43,7 @@ class ConsecDisambiguationInstance:
 
         candidate_definitions = [ self._get_definition(sense) for sense in candidate_senses ]
         context_definitions = [ (i, self._get_definition(sense)) for i, sense in context_senses ]
-
+        
         tokenizer_result = self._tokenizer.tokenize(self._tokens, idx, candidate_definitions, context_definitions)
         return tokenizer_result, (candidate_senses, candidate_definitions)
     

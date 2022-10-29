@@ -54,6 +54,11 @@ class SenseExtractor(nn.Module):
             torch.nn.Dropout(0.0), torch.nn.Linear(self.model.config.hidden_size, 1, bias=False)
         )
 
+        print("Devices")
+        print(torch.cuda.is_available())
+        print(torch.cuda.current_device())
+        print(torch.cuda.get_device_name(torch.cuda.current_device()))
+
     def _compute_markers(self, input_ids, logits):
         output_markers = torch.zeros_like(input_ids)
         markers_positions = torch.argmax(logits, dim=-1, keepdim=True)
