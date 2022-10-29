@@ -3,6 +3,8 @@ import torch.nn as nn
 from transformers import DebertaPreTrainedModel
 from transformers.models.deberta.modeling_deberta import DebertaEmbeddings, DebertaEncoder
 
+from .utils import batchify, batchify_matrices
+
 class ConsecDebertaModel(DebertaPreTrainedModel):
     def __init__(self, config):
         print("Init ConsecDeberatModel")
@@ -83,3 +85,22 @@ class SenseExtractor(nn.Module):
         for idx in definition_positions:
             definition_probs.append(prediction_probs[idx].item())
         return definition_probs
+    
+    def batch_extract(self, input_ids_list, attention_mask_list, token_types_list, relative_pos_list, definitions_mask_list, definition_positions_list):
+        batch_input_ids = batchify(input_ids_list, 0)
+        batch_attention_mask = batchify(attention_mask_list, 0)
+        batch_token_types = batchify(token_types_list, 0)
+        batch_relative_pos = batchify_matrices(relative_pos_list, 0)
+        batch_definitions_mask = batchify(definitions_mask_list, 1)
+
+        classification_logits = self.forward(batch_input_ids, batch_attention_mask, batch_token_types, batch_relative_pos)
+        classification_logits = self._mask_logits(classification_logits, batch_definitions_mask)
+        prediction_probs = torch.softmax(classification_logits, dim=-1)
+
+        definition_probs_list = []
+        for i, definition_positions in enumerate(definition_positions_list):
+            definition_probs = []
+            for idx in definition_positions:
+                definition_probs.append(prediction_probs[i, idx].item())
+            definition_probs_list.append(definition_probs)
+        return definition_probs_list

@@ -1,8 +1,9 @@
+from lib2to3.pgen2 import token
 import torch
 
 from .text_disambiguator import TextDisambiguator
 from config import CONSEC_MODEL_STATE
-from code_names_bot_text_graph.consec.tokenizer import ConsecTokenizer
+from code_names_bot_text_graph.consec.disambiguation_instance import ConsecDisambiguationInstance
 from code_names_bot_text_graph.consec.sense_extractor import SenseExtractor
 
 class ConsecTextDisambiguator(TextDisambiguator):
@@ -13,41 +14,65 @@ class ConsecTextDisambiguator(TextDisambiguator):
         state_dict = torch.load(CONSEC_MODEL_STATE)
         self._sense_extractor = SenseExtractor()
         self._sense_extractor.load_state_dict(state_dict)
-        
-        self._tokenizer = ConsecTokenizer()
+        self._sense_extractor.eval()
     
-    def _disambiguate_token(self, tokens, target_idx, candidate_senses, context_senses):
-        candidate_definitions = [ self._get_definition(sense) for sense in candidate_senses ]
-        context_definitions = [ (i, self._get_definition(sense)) for i, sense in context_senses ]
-
-        tokenizer_result = self._tokenizer.tokenize(tokens, target_idx, candidate_definitions, context_definitions)
-        probs = self._sense_extractor.extract(*tokenizer_result)
-
-        if self._debug_mode:
-            sense_idxs = torch.tensor(probs).argsort(descending=True)
-            for sense_idx in sense_idxs:
-                print(f"{candidate_senses[sense_idx]}:  {probs[sense_idx]} --- {candidate_definitions[sense_idx]}")
-
-        sense_idx = torch.argmax(torch.tensor(probs))
-        return candidate_senses[sense_idx]
-
-    def disambiguate(self, token_senses, compound_indices):
-        tokens = [ token for token, _ in token_senses ]
-        token_polysemy = [ len(senses) for _, senses in token_senses ]
-        disambiguation_order = torch.tensor(token_polysemy).argsort()
+    def _get_disambiguation_order(self, token_senses):
         disambiguated_senses = [None] * len(token_senses)
 
-        for idx in disambiguation_order:
-            _, candidate_senses = token_senses[idx]
-            
-            if len(candidate_senses) == 0:
-                continue
-            
-            if len(candidate_senses) == 1:
-                disambiguated_senses[idx] = candidate_senses[0]
-                continue
+        token_polysemy = []
+        for i, (_, senses) in enumerate(token_senses):
+            if len(senses) == 1:
+                disambiguated_senses[i] = senses[0]
+            elif len(senses) > 1:
+                token_polysemy.append((i, len(senses)))
 
-            context_senses = [ (i, sense) for i, sense in enumerate(disambiguated_senses) if sense is not None ]
-            disambiguated_senses[idx] = self._disambiguate_token(tokens, idx, candidate_senses, context_senses)
+        print(token_polysemy)
+        token_polysemy = sorted(token_polysemy, key=lambda item:item[1])
+        disambiguation_order = [ i for i, _ in token_polysemy]
+        print(disambiguation_order)
+        return disambiguated_senses, disambiguation_order
 
-        return disambiguated_senses
+    def disambiguate(self, token_senses, compound_indices):
+        disambiguation_instance = ConsecDisambiguationInstance(self._dictionary, token_senses, compound_indices)
+
+        while not disambiguation_instance.is_finished():
+            input, (senses, definitions) = disambiguation_instance.get_next_input()
+            probs = self._sense_extractor.extract(*input)
+
+            if self._debug_mode:
+                sense_idxs = torch.tensor(probs).argsort(descending=True)
+                for sense_idx in sense_idxs:
+                    print(f"{senses[sense_idx]}:  {probs[sense_idx]} --- {definitions[sense_idx]}")
+
+            sense_idx = torch.argmax(torch.tensor(probs))
+            disambiguation_instance.set_result(senses[sense_idx])
+
+        return disambiguation_instance.get_disambiguated_senses()
+
+    def batch_disambiguate(self, token_senses_compound_indices_list):
+        instances = [ ConsecDisambiguationInstance(self._dictionary, token_senses, compound_indices) for token_senses, compound_indices in token_senses_compound_indices_list]
+
+        round = 0
+        while any([ not instance.is_finished() for instance in instances ]):
+            print("Round", round)
+            round += 1
+
+            inputs_list = []
+            senses_list = []
+            active_instances = []
+
+            for instance in instances:
+                if not instance.is_finished():
+                    inputs, (senses, _) = instance.get_next_input()
+                    active_instances.append(instance)
+                    inputs_list.append(inputs)
+                    senses_list.append(senses)
+
+            inputs_list = list(zip(*inputs_list))
+            probs_list = self._sense_extractor.batch_extract(*inputs_list)
+
+            for probs, senses, instance in zip(probs_list, senses_list, active_instances):
+                sense_idx = torch.argmax(torch.tensor(probs))
+                instance.set_result(senses[sense_idx])
+
+        return [ instance.get_disambiguated_senses() for instance in instances ]

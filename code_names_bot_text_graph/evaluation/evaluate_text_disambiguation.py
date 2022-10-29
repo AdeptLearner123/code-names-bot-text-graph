@@ -18,6 +18,7 @@ class ErrorReason(Enum):
     MISSING_PROPOSAL = 2
     INCORRECT_DISAMBIGUATION = 3
 
+BATCH_SIZE = 1 #10
 
 def evaluate_text(text, token_tagger, sense_proposer, disambiguator, sense_labels, dictionary):
     token_tags = token_tagger.tokenize_tag(text)
@@ -47,6 +48,44 @@ def evaluate_text(text, token_tagger, sense_proposer, disambiguator, sense_label
     return correct, errors
 
 
+def batch_evaluate_text(text_ids, text_dict, token_tagger, sense_proposer, disambiguator, all_labels, dictionary):
+    text_list = [ text_dict[text_id] for text_id in text_ids ]
+    labels_list = [ all_labels[text_id] for text_id in text_ids ]
+
+    token_senses_list = []
+    compound_indices_list = []
+    token_tags_list = []
+    for text in text_list:
+        token_tags = token_tagger.tokenize_tag(text)
+        token_tags_list.append(token_tags)
+        token_senses, compound_indices = sense_proposer.propose_senses(token_tags)
+        token_senses_list.append(token_senses)
+        compound_indices_list.append(compound_indices)
+    
+    correct = 0
+    errors = defaultdict(lambda: [])
+
+    senses_list = disambiguator.batch_disambiguate(list(zip(token_senses_list, compound_indices_list)))
+    for text_id, predicted_senses, labels_list, token_tags, token_senses in zip(text_ids, senses_list, labels_list, token_tags_list, token_senses_list):
+        for predicted_sense, label, (token, tag), (_, proposed_senses) in zip(predicted_senses, labels_list, token_tags, token_senses):
+            if label == None:
+                continue
+
+            if label == predicted_sense:
+                correct += 1
+            elif label in proposed_senses:
+                errors[ErrorReason.INCORRECT_DISAMBIGUATION].append((text_id, token))
+            elif label in dictionary and dictionary[label]["pos"] == tag:
+                errors[ErrorReason.MISSING_PROPOSAL].append((text_id, token))
+            elif label in dictionary:
+                errors[ErrorReason.INCORRECT_TAG].append((text_id, token))
+            else:
+                errors[ErrorReason.MISSING_SENSE].append((text_id, token))
+    
+    return correct, errors
+
+
+
 def main():
     with open(TEXT_SENSE_LABELS, "r") as file:
         all_sense_labels = json.loads(file.read())
@@ -65,24 +104,24 @@ def main():
     token_tagger = TokenTagger()
     sense_inventory = SenseInventory(sense_inventory_data)
     sense_proposer = TextSenseProposer(sense_inventory)
-    #disambiguator = ConsecTextDisambiguator(dictionary)
-    #disambiguator = BaselineDisambiguator(dictionary)
     disambiguator = ConsecCompoundTextDisambiguator(dictionary)
 
     total_correct = 0
     total_incorrect = 0
     all_errors = defaultdict(lambda: [])
 
-    for text_id in tqdm(all_sense_labels.keys()):
-        sense_labels = all_sense_labels[text_id]
-        text = text_dict[text_id]
-
-        correct, errors = evaluate_text(text, token_tagger, sense_proposer, disambiguator, sense_labels, dictionary)
-        
-        total_correct += correct
-        for error_type in errors:
-            all_errors[error_type] += [ (text_id, token) for token in errors[error_type] ]
-            total_incorrect += len(errors[error_type])
+    text_ids = list(all_sense_labels.keys())
+    with tqdm(total = len(text_ids)) as pbar:
+        for i in range(0, len(text_ids), BATCH_SIZE):
+            batch_text_ids = text_ids[i : i + BATCH_SIZE]
+            correct, errors = batch_evaluate_text(batch_text_ids, text_dict, token_tagger, sense_proposer, disambiguator, all_sense_labels, dictionary)
+                
+            total_correct += correct
+            for error_type in errors:
+                all_errors[error_type] += errors[error_type]
+                total_incorrect += len(errors[error_type])
+            
+            pbar.update(BATCH_SIZE)
 
     print("Correct: ", total_correct)
     print("Incorrect", total_incorrect)
