@@ -56,7 +56,8 @@ class LabelerWindow(QtWidgets.QWidget):
             is_label = sense == label
             is_predicted = sense == predicted_sense
             style = label_style if is_label else predicted_style if is_predicted else ''
-            senses_content += f"<li {style}>[{self.INPUT_KEYS[i]}]  {sense}:  {definition}</li>"
+            input_key = self.INPUT_KEYS[i] if i < len(self.INPUT_KEYS) else ""
+            senses_content += f"<li {style}>[{input_key}]  {sense}:  {definition}</li>"
         if label is not None and label not in senses:
             senses_content += f"<li {label_style}>{label}</li>"
         senses_content += "</ul>"

@@ -10,7 +10,6 @@ packages = [{include = "code_names_bot_text_graph"}]
 python = "^3.10,<3.11"
 black = "^22.8.0"
 isort = "^5.10.1"
-PyYAML = "^6.0"
 spacy = "^3.4.1"
 PySide6 = "^6.3.2"
 pytorch-lightning = "^1.7.7"
@@ -31,8 +30,8 @@ print-profile                           = "tools.print_profile:main"
 
 extract-texts                           = "code_names_bot_text_graph.text_extraction.extract_texts:main"
 create-sense-inventory                  = "code_names_bot_text_graph.sense_inventory.create_sense_inventory:main"
-
 create-domain-class-to-sense            = "code_names_bot_text_graph.sem_link_disambiguator.create_domain_class_to_sense:main"
+disambiguate-texts                      = "code_names_bot_text_graph.text_graph_creator.disambiguate_texts:main"
 
 text-labeler                            = "code_names_bot_text_graph.labeler.text_labeler:main"
 domain-labeler                          = "code_names_bot_text_graph.labeler.sem_link_labeler:label_domains"

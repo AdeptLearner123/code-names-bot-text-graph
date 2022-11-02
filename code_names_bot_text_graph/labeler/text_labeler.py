@@ -65,6 +65,7 @@ def read_text_dict():
 
 
 def save_labels(sense_labels):
+    print("Total sense labels", len(sense_labels))
     with open(TEXT_SENSE_LABELS, "w+") as file:
         file.write(json.dumps(sense_labels, sort_keys=True, indent=4, ensure_ascii=False))
 
@@ -89,12 +90,17 @@ def main():
 
     if len(sys.argv) > 1 and sys.argv[1] == "-l":
         keys = list(sense_labels.keys())
+        start = 6
     else:
         keys = list(text_dict.keys())
         random.seed(0)
         random.shuffle(keys)
 
-    labeler.start(keys, start=6)
+        start = 0
+        while keys[start] in sense_labels:
+            start += 1
+
+    labeler.start(keys, start=start)
 
 if __name__ == "__main__":
     main()

@@ -46,7 +46,6 @@ class ConsecDisambiguationInstance:
         return tokenizer_result, (candidate_senses, candidate_definitions)
     
     def set_result(self, disambiguated_sense):
-        print("Set result", disambiguated_sense, self._current)
         idx = self._disambiguation_order[self._current]
         self._disambiguated_senses[idx] = disambiguated_sense
         self._current += 1

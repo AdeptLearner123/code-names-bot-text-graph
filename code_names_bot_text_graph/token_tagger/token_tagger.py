@@ -26,9 +26,14 @@ class TokenTagger():
         
         return None
 
-    def tokenize_tag(self, text):
-        doc = self._nlp(text)
+    def get_doc(self, text):
+        return self._nlp(text)
 
+    def tokenize_tag_doc(self, doc):
         tokens = [ token.text for token in doc ]
         tags = [ self._get_token_tag(token) for token in doc ]
         return list(zip(tokens, tags))
+
+    def tokenize_tag(self, text):
+        doc = self.get_doc(text)
+        return self.tokenize_tag_doc(doc)

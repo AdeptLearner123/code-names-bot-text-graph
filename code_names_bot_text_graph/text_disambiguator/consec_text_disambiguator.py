@@ -30,10 +30,8 @@ class ConsecTextDisambiguator(TextDisambiguator):
             elif len(senses) > 1:
                 token_polysemy.append((i, len(senses)))
 
-        print(token_polysemy)
         token_polysemy = sorted(token_polysemy, key=lambda item:item[1])
         disambiguation_order = [ i for i, _ in token_polysemy]
-        print(disambiguation_order)
         return disambiguated_senses, disambiguation_order
 
     def disambiguate(self, token_senses, compound_indices):
@@ -69,7 +67,6 @@ class ConsecTextDisambiguator(TextDisambiguator):
 
         round = 0
         while any([ not instance.is_finished() for instance in instances ]):
-            print("Round", round)
             round += 1
 
             inputs_list = []

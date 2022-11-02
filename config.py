@@ -5,6 +5,8 @@ SENSE_INVENTORY = "output/sense_inventory.json"
 DOMAIN_TO_SENSE = "output/domain_to_sense.json"
 CLASS_TO_SENSE = "output/class_to_sense.json"
 
+TEXT_SENSES = "output/text_senses.json"
+
 TEXT_LIST = "output/text_list.txt"
 DICTIONARY_TEXT_LINKED = "output/dictionary_text_linked.json"
 
@@ -14,3 +16,4 @@ DOMAIN_LABELS = "output/domain_labels.json"
 CLASS_LABELS = "output/class_labels.json"
 
 CONSEC_MODEL_STATE = "model_states/consec_semcor_normal_best_sense_extractor.pt"
+#CONSEC_MODEL_STATE = "model_states/consec_wngt_best_sense_extractor.pt"
