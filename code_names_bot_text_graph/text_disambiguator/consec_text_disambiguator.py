@@ -39,6 +39,9 @@ class ConsecTextDisambiguator(TextDisambiguator):
 
         while not disambiguation_instance.is_finished():
             input, (senses, definitions) = disambiguation_instance.get_next_input()
+            if torch.cuda.is_available():
+                input = self._send_inputs_to_cuda(input)
+
             probs = self._sense_extractor.extract(*input)
 
             if self._debug_mode:
