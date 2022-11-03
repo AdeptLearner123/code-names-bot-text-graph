@@ -5,6 +5,7 @@ from code_names_bot_text_graph.text_disambiguator.consec_compound_text_disambigu
 from config import TEXT_LIST, DICTIONARY, SENSE_INVENTORY, TEXT_SENSES
 
 import json
+import os
 from tqdm import tqdm
 
 
@@ -46,8 +47,11 @@ def main():
     with open(SENSE_INVENTORY, "r") as file:
         sense_inventory_data = json.loads(file.read())
 
-    with open(TEXT_SENSES, "r") as file:
-        text_senses = json.loads(file.read())
+    if os.path.isfile(TEXT_SENSES):
+        with open(TEXT_SENSES, "r") as file:
+            text_senses = json.loads(file.read())
+    else:
+        text_senses = {}
 
     token_tagger = TokenTagger()
     sense_inventory = SenseInventory(sense_inventory_data)
