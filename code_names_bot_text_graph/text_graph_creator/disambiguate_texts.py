@@ -8,7 +8,7 @@ import json
 from tqdm import tqdm
 
 
-SAVE_INTERVAL = 5 #50
+SAVE_INTERVAL = 50
 
 def disambiguate(token_tagger, sense_proposer, disambiguator, text):
     doc = token_tagger.get_doc(text)
