@@ -2,14 +2,14 @@ from code_names_bot_text_graph.token_tagger.token_tagger import TokenTagger
 from code_names_bot_text_graph.sense_inventory.sense_inventory import SenseInventory
 from code_names_bot_text_graph.text_disambiguator.text_sense_proposer import TextSenseProposer
 from code_names_bot_text_graph.text_disambiguator.consec_compound_text_disambiguator import ConsecCompoundTextDisambiguator
-from config import TEXT_LIST, DICTIONARY, SENSE_INVENTORY, TEXT_SENSES
+from config import TEXT_LIST, DICTIONARY, SENSE_INVENTORY, TEXT_SENSE_BATCHES
 
 import json
 import os
 from tqdm import tqdm
 
 
-SAVE_INTERVAL = 50
+SAVE_INTERVAL = 1000
 
 def disambiguate(token_tagger, sense_proposer, disambiguator, text):
     doc = token_tagger.get_doc(text)
@@ -29,10 +29,26 @@ def disambiguate(token_tagger, sense_proposer, disambiguator, text):
     return sense_char_idxs
 
 
-def save(text_senses):
-    print("Saving", len(text_senses))
-    with open(TEXT_SENSES, "w") as file:
-        file.write(json.dumps(text_senses, sort_keys=True, indent=4, ensure_ascii=False))
+def save(batch_id, batch_text_senses):
+    print("Saving", len(batch_text_senses))
+    filename = f"batch_{batch_id}.json"
+    path = os.path.join(TEXT_SENSE_BATCHES, filename)
+
+    if os.path.isfile(path):
+        raise "Batch file path already exists: " + path
+
+    with open(path, "w+") as file:
+        file.write(json.dumps(batch_text_senses, sort_keys=True, indent=4, ensure_ascii=False))
+
+
+def get_disambiguated_text_ids():
+    text_ids = set()
+    for filename in os.listdir(TEXT_SENSE_BATCHES):
+        if filename.endswith(".json"):
+            with open(os.path.join(TEXT_SENSE_BATCHES, filename), "r") as file:
+                file_json = json.loads(file.read())
+                text_ids.update(file_json.keys())
+    return text_ids
 
 
 def main():
@@ -47,30 +63,29 @@ def main():
     with open(SENSE_INVENTORY, "r") as file:
         sense_inventory_data = json.loads(file.read())
 
-    if os.path.isfile(TEXT_SENSES):
-        with open(TEXT_SENSES, "r") as file:
-            text_senses = json.loads(file.read())
-    else:
-        text_senses = {}
-
     token_tagger = TokenTagger()
     sense_inventory = SenseInventory(sense_inventory_data)
     sense_proposer = TextSenseProposer(sense_inventory)
     disambiguator = ConsecCompoundTextDisambiguator(dictionary)
 
-    missing_text_ids = set(text_dict.keys()).difference(text_senses.keys())
+    disambiguated_text_ids = get_disambiguated_text_ids()
+    missing_text_ids = set(text_dict.keys()).difference(disambiguated_text_ids)
     print("Text ids:", len(missing_text_ids), "/", len(text_dict))
 
+    batch_text_senses = dict()
+    batch_id = len(disambiguated_text_ids)
     for i, text_id in tqdm(list(enumerate(missing_text_ids))):
         text = text_dict[text_id]
-        text_senses[text_id] = {
+        batch_text_senses[text_id] = {
             "text": text,
             "senses": disambiguate(token_tagger, sense_proposer, disambiguator, text_dict[text_id])
         }
 
-        if i > 0 and i % SAVE_INTERVAL == 0:
-            save(text_senses)
-    save(text_senses)
+        if (i + 1) % SAVE_INTERVAL == 0:
+            save(batch_id, batch_text_senses)
+            batch_text_senses = dict()
+            batch_id += SAVE_INTERVAL
+    save(batch_id, batch_text_senses)
 
 
 if __name__ == "__main__":

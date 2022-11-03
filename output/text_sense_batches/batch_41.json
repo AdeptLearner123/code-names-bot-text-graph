@@ -1,0 +1,207 @@
+{
+    "m_en_gb_oed86958.005_def": {
+        "senses": [
+            {
+                "len": 7,
+                "sense": "m_en_gbus1117380.006",
+                "start": 0
+            },
+            {
+                "len": 4,
+                "sense": "m_en_gbus0466520.031",
+                "start": 13
+            },
+            {
+                "len": 5,
+                "sense": "m_en_gbus0784870.006",
+                "start": 18
+            }
+        ],
+        "text": "uttered at a high pitch"
+    },
+    "m_en_gbus0243820.013_def": {
+        "senses": [
+            {
+                "len": 8,
+                "sense": "m_en_gbus0859220.013",
+                "start": 0
+            },
+            {
+                "len": 7,
+                "sense": "m_en_gbus0817970.008",
+                "start": 14
+            },
+            {
+                "len": 4,
+                "sense": "m_en_gbus1043600.010",
+                "start": 31
+            },
+            {
+                "len": 4,
+                "sense": "m_en_gbus0251870.014",
+                "start": 39
+            },
+            {
+                "len": 5,
+                "sense": "m_en_gbus0665320.008",
+                "start": 47
+            },
+            {
+                "len": 5,
+                "sense": "m_en_gbus0786060.010",
+                "start": 62
+            },
+            {
+                "len": 10,
+                "sense": "m_en_gbus0316960.010",
+                "start": 74
+            },
+            {
+                "len": 8,
+                "sense": "m_en_gbus0287340.005",
+                "start": 85
+            },
+            {
+                "len": 8,
+                "sense": "m_en_gbus0207340.005",
+                "start": 97
+            },
+            {
+                "len": 6,
+                "sense": "m_en_gbus1024550.007",
+                "start": 106
+            },
+            {
+                "len": 3,
+                "sense": "m_en_gbus0243820.006",
+                "start": 132
+            },
+            {
+                "len": 3,
+                "sense": "m_en_gbus0243820.006",
+                "start": 136
+            },
+            {
+                "len": 5,
+                "sense": "m_en_gbus0243820.006",
+                "start": 140
+            },
+            {
+                "len": 9,
+                "sense": "m_en_gbus0395540.011",
+                "start": 146
+            }
+        ],
+        "text": "relating to a process in which text or data is moved from one place in an electronic document or computer system to another via the cut and paste functions"
+    },
+    "m_en_gbus0807520.004_def": {
+        "senses": [
+            {
+                "len": 10,
+                "sense": "m_en_gbus0432890.007",
+                "start": 2
+            },
+            {
+                "len": 6,
+                "sense": "m_en_gbus0435990.004",
+                "start": 13
+            },
+            {
+                "len": 8,
+                "sense": "m_en_gbus0435990.004",
+                "start": 20
+            },
+            {
+                "len": 5,
+                "sense": "m_en_gbus0587880.026",
+                "start": 34
+            },
+            {
+                "len": 14,
+                "sense": "m_en_gbus0515280.004",
+                "start": 43
+            },
+            {
+                "len": 7,
+                "sense": "m_en_gbus0136800.005",
+                "start": 58
+            },
+            {
+                "len": 5,
+                "sense": "m_en_gbus0227840.017",
+                "start": 75
+            },
+            {
+                "len": 5,
+                "sense": "m_en_gbus0007320.005",
+                "start": 86
+            }
+        ],
+        "text": "a gregarious ground squirrel that lives in interconnected burrows that may cover many acres"
+    },
+    "m_en_gbus0880440.004_def": {
+        "senses": [
+            {
+                "len": 8,
+                "sense": "m_en_gbus0132950.007",
+                "start": 2
+            },
+            {
+                "len": 10,
+                "sense": "m_en_gbus0214110.012",
+                "start": 11
+            },
+            {
+                "len": 7,
+                "sense": "m_en_gbus0206340.033",
+                "start": 24
+            },
+            {
+                "len": 5,
+                "sense": "m_en_gbus0881470.014",
+                "start": 35
+            },
+            {
+                "len": 8,
+                "sense": "m_en_gbus0268030.024",
+                "start": 41
+            },
+            {
+                "len": 11,
+                "sense": "m_en_gbus0963750.007",
+                "start": 77
+            },
+            {
+                "len": 7,
+                "sense": "m_en_gbus0031770.005",
+                "start": 101
+            },
+            {
+                "len": 4,
+                "sense": "m_en_gbus0880840.012",
+                "start": 109
+            }
+        ],
+        "text": "a building containing a complex of rooms designed for bathing, relaxing, and socializing, as used in ancient Rome"
+    },
+    "m_en_gbus1184384.006_def": {
+        "senses": [
+            {
+                "len": 9,
+                "sense": "m_en_gbus0321180.023",
+                "start": 8
+            },
+            {
+                "len": 10,
+                "sense": "m_en_gbus1017310.006",
+                "start": 22
+            },
+            {
+                "len": 6,
+                "sense": "m_en_gbus0680610.012",
+                "start": 33
+            }
+        ],
+        "text": "used to emphasize the surprising nature of something"
+    }
+}

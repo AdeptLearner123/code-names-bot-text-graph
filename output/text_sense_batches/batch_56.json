@@ -1,0 +1,167 @@
+{
+    "Gabby_Douglas_text_2": {
+        "senses": [
+            {
+                "len": 6,
+                "sense": "m_en_gbus0631540.011",
+                "start": 15
+            },
+            {
+                "len": 4,
+                "sense": "m_en_gbus0421010.018",
+                "start": 29
+            },
+            {
+                "len": 7,
+                "sense": "m_en_gbus1160080.012",
+                "start": 34
+            },
+            {
+                "len": 8,
+                "sense": "m_en_gbus0028030.003",
+                "start": 42
+            },
+            {
+                "len": 5,
+                "sense": "m_en_gbus1034810.005",
+                "start": 51
+            }
+        ],
+        "text": "she was also a member of the gold-winning American teams at the 2011 and the 2015 World Championships"
+    },
+    "m_en_gbus0419970.009_def": {
+        "senses": [
+            {
+                "len": 7,
+                "sense": "m_en_gbus1044650.039",
+                "start": 6
+            },
+            {
+                "len": 7,
+                "sense": "m_en_gbus0751330.006",
+                "start": 17
+            },
+            {
+                "len": 6,
+                "sense": "m_en_gbus0911080.008",
+                "start": 25
+            },
+            {
+                "len": 9,
+                "sense": "m_en_gbus0981950.005",
+                "start": 51
+            },
+            {
+                "len": 7,
+                "sense": "m_en_gbus0819840.033",
+                "start": 64
+            },
+            {
+                "len": 5,
+                "sense": "m_en_gbus0932160.008",
+                "start": 74
+            }
+        ],
+        "text": "(in a theater) a partial screen used in front of a spotlight to project a shape"
+    },
+    "m_en_gbus0884420.015_text_0": {
+        "senses": [
+            {
+                "len": 4,
+                "sense": "m_en_gbus0381910.016",
+                "start": 4
+            },
+            {
+                "len": 7,
+                "sense": "m_en_gbus1120900.005",
+                "start": 12
+            },
+            {
+                "len": 7,
+                "sense": "m_en_gbus0881070.011",
+                "start": 27
+            },
+            {
+                "len": 9,
+                "sense": "m_en_gbus0270180.011",
+                "start": 40
+            }
+        ],
+        "text": "the form, a variant of the rondeau, was developed by Swinburne"
+    },
+    "m_en_gbus1116550.010_def": {
+        "senses": [
+            {
+                "len": 8,
+                "sense": "m_en_gbus0713300.011",
+                "start": 3
+            },
+            {
+                "len": 5,
+                "sense": "m_en_gbus0227120.006",
+                "start": 17
+            },
+            {
+                "len": 6,
+                "sense": "m_en_gbus0305460.013",
+                "start": 29
+            },
+            {
+                "len": 7,
+                "sense": "m_en_gbus0501740.006",
+                "start": 36
+            },
+            {
+                "len": 8,
+                "sense": "m_en_gbus1019870.018",
+                "start": 44
+            },
+            {
+                "len": 6,
+                "sense": "m_en_gbus0538800.012",
+                "start": 56
+            },
+            {
+                "len": 9,
+                "sense": "m_en_gbus1163830.010",
+                "start": 67
+            },
+            {
+                "len": 7,
+                "sense": "m_en_gbus0543810.020",
+                "start": 81
+            },
+            {
+                "len": 5,
+                "sense": "m_en_gbus0725160.037",
+                "start": 89
+            }
+        ],
+        "text": "an official in a court whose duties include swearing in jurors and witnesses and keeping order"
+    },
+    "m_en_gbus1182142.005_def": {
+        "senses": [
+            {
+                "len": 8,
+                "sense": "m_en_gbus0264610.005",
+                "start": 0
+            },
+            {
+                "len": 8,
+                "sense": "m_en_gbus0859220.016",
+                "start": 12
+            },
+            {
+                "len": 7,
+                "sense": "m_en_gbus1183103.004",
+                "start": 24
+            },
+            {
+                "len": 13,
+                "sense": "m_en_gbus1183103.004",
+                "start": 32
+            }
+        ],
+        "text": "denoting or relating to Olympic weightlifting"
+    }
+}

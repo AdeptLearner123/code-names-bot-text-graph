@@ -1,0 +1,217 @@
+{
+    "Peter_Schmeichel_text_1": {
+        "senses": [
+            {
+                "len": 3,
+                "sense": "m_en_gbus1160080.012",
+                "start": 8
+            },
+            {
+                "len": 4,
+                "sense": "UEFA_Euro_2020_squads",
+                "start": 16
+            },
+            {
+                "len": 4,
+                "sense": "UEFA_Euro_2020_squads",
+                "start": 21
+            },
+            {
+                "len": 7,
+                "sense": "m_en_gbus0226250.006",
+                "start": 40
+            },
+            {
+                "len": 7,
+                "sense": "m_en_gbus0264510.005",
+                "start": 48
+            }
+        ],
+        "text": "he also won the UEFA Euro 1992 with his country Denmark"
+    },
+    "m_en_gb_oed131300_33524582.002_def": {
+        "senses": [
+            {
+                "len": 9,
+                "sense": "m_en_gbus1037280.007",
+                "start": 6
+            },
+            {
+                "len": 6,
+                "sense": "m_en_gbus0454270.043",
+                "start": 17
+            },
+            {
+                "len": 8,
+                "sense": "m_en_gbus0850590.006",
+                "start": 28
+            },
+            {
+                "len": 7,
+                "sense": "m_en_gbus0866050.022",
+                "start": 37
+            },
+            {
+                "len": 4,
+                "sense": "m_en_gbus0477660.007",
+                "start": 52
+            },
+            {
+                "len": 7,
+                "sense": "m_en_gbus0175500.007",
+                "start": 58
+            },
+            {
+                "len": 2,
+                "sense": "m_en_gb_oed131300_33524582.002",
+                "start": 70
+            },
+            {
+                "len": 1,
+                "sense": "m_en_gb_oed131300_33524582.002",
+                "start": 72
+            },
+            {
+                "len": 4,
+                "sense": "m_en_gb_oed131300_33524582.002",
+                "start": 73
+            },
+            {
+                "len": 8,
+                "sense": "m_en_gbus0346570.006",
+                "start": 91
+            },
+            {
+                "len": 10,
+                "sense": "m_en_gbus0509900.006",
+                "start": 104
+            },
+            {
+                "len": 9,
+                "sense": "m_en_gbus1037280.007",
+                "start": 117
+            },
+            {
+                "len": 7,
+                "sense": "m_en_gbus0581040.024",
+                "start": 140
+            },
+            {
+                "len": 8,
+                "sense": "m_en_gbus0850590.006",
+                "start": 152
+            }
+        ],
+        "text": "(Of a telephone) having the receiver resting on the hook; chiefly in \"on-hook dialling\", a facility for initiating a telephone call without lifting the receiver"
+    },
+    "m_en_gbus0960540.016_def": {
+        "senses": [
+            {
+                "len": 5,
+                "sense": "m_en_gbus0960280.006",
+                "start": 7
+            },
+            {
+                "len": 10,
+                "sense": "m_en_gbus0041470.006",
+                "start": 16
+            },
+            {
+                "len": 4,
+                "sense": "m_en_gbus0592580.016",
+                "start": 28
+            },
+            {
+                "len": 7,
+                "sense": "m_en_gbus0948650.005",
+                "start": 37
+            }
+        ],
+        "text": "like a snake in appearance; long and sinuous"
+    },
+    "m_en_gbus1062120.012_def": {
+        "senses": [
+            {
+                "len": 8,
+                "sense": "m_en_gbus0859220.016",
+                "start": 0
+            },
+            {
+                "len": 11,
+                "sense": "m_en_gbus0048220.006",
+                "start": 16
+            },
+            {
+                "len": 8,
+                "sense": "m_en_gbus0005510.006",
+                "start": 31
+            },
+            {
+                "len": 14,
+                "sense": "m_en_gbus0863230.009",
+                "start": 40
+            },
+            {
+                "len": 8,
+                "sense": "m_en_gbus0777200.011",
+                "start": 62
+            },
+            {
+                "len": 8,
+                "sense": "m_en_gbus0354560.006",
+                "start": 71
+            },
+            {
+                "len": 4,
+                "sense": "m_en_gbus0045710.006",
+                "start": 86
+            }
+        ],
+        "text": "relating to the arrangement or accurate representation of the physical features of an area"
+    },
+    "m_en_gbus1185102.018_def": {
+        "senses": [
+            {
+                "len": 3,
+                "sense": "m_en_gbus0885130.015",
+                "start": 2
+            },
+            {
+                "len": 4,
+                "sense": "m_en_gbus0583770.047",
+                "start": 9
+            },
+            {
+                "len": 5,
+                "sense": "m_en_gbus0428950.006",
+                "start": 17
+            },
+            {
+                "len": 5,
+                "sense": "m_en_gbus0426560.006",
+                "start": 24
+            },
+            {
+                "len": 4,
+                "sense": "m_en_gbus0235130.006",
+                "start": 40
+            },
+            {
+                "len": 4,
+                "sense": "m_en_gbus0580010.021",
+                "start": 51
+            },
+            {
+                "len": 4,
+                "sense": "m_en_gbus1187145.004",
+                "start": 61
+            },
+            {
+                "len": 6,
+                "sense": "m_en_gbus0849330.005",
+                "start": 69
+            }
+        ],
+        "text": "a row or line of grass, grain, or other crop as it lies when mown or reaped"
+    }
+}

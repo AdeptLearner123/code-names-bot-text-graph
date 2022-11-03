@@ -1,0 +1,172 @@
+{
+    "m_en_gb_oed128926_34375800.002_def": {
+        "senses": [
+            {
+                "len": 4,
+                "sense": "m_en_gbus0874580.013",
+                "start": 15
+            },
+            {
+                "len": 7,
+                "sense": "m_en_gbus0823090.005",
+                "start": 23
+            },
+            {
+                "len": 5,
+                "sense": "m_en_gbus1103150.007",
+                "start": 31
+            },
+            {
+                "len": 5,
+                "sense": "m_en_gbus0381910.054",
+                "start": 43
+            },
+            {
+                "len": 7,
+                "sense": "m_en_gb_oed128926_34375794.002",
+                "start": 51
+            },
+            {
+                "len": 4,
+                "sense": "m_en_gb_oed128926_34375794.002",
+                "start": 59
+            }
+        ],
+        "text": "the octahedral ring of protein units which forms a nuclear pore"
+    },
+    "m_en_gbus0292910.002_def": {
+        "senses": [
+            {
+                "len": 12,
+                "sense": "m_en_gbus0947190.005",
+                "start": 4
+            },
+            {
+                "len": 11,
+                "sense": "m_en_gbus0283790.006",
+                "start": 17
+            },
+            {
+                "len": 5,
+                "sense": "m_en_gbus1113940.008",
+                "start": 36
+            },
+            {
+                "len": 5,
+                "sense": "m_en_gbus0597740.005",
+                "start": 46
+            },
+            {
+                "len": 6,
+                "sense": "m_en_gbus0597740.005",
+                "start": 52
+            },
+            {
+                "len": 10,
+                "sense": "m_en_gbus0750340.022",
+                "start": 62
+            },
+            {
+                "len": 8,
+                "sense": "m_en_gbus0315950.005",
+                "start": 91
+            },
+            {
+                "len": 7,
+                "sense": "m_en_gbus0865370.007",
+                "start": 109
+            },
+            {
+                "len": 8,
+                "sense": "m_en_gbus0253890.006",
+                "start": 119
+            },
+            {
+                "len": 6,
+                "sense": "m_en_gbus0481790.041",
+                "start": 140
+            }
+        ],
+        "text": "the simultaneous dissolution of the upper and lower houses of parliament preparatory to an election, used to resolve a deadlock between the houses"
+    },
+    "m_en_gbus0423290.007_def": {
+        "senses": [
+            {
+                "len": 8,
+                "sense": "m_en_gbus0390260.006",
+                "start": 0
+            },
+            {
+                "len": 7,
+                "sense": "m_en_gbus0461010.006",
+                "start": 10
+            },
+            {
+                "len": 11,
+                "sense": "m_en_gbus0217770.009",
+                "start": 22
+            },
+            {
+                "len": 8,
+                "sense": "m_en_gbus0355340.006",
+                "start": 34
+            },
+            {
+                "len": 8,
+                "sense": "m_en_gbus0056600.019",
+                "start": 46
+            }
+        ],
+        "text": "friendly, helpful, or cooperative feelings or attitude"
+    },
+    "m_en_gbus0749340.014_def": {
+        "senses": [
+            {
+                "len": 3,
+                "sense": "m_en_gbus0007610.017",
+                "start": 6
+            },
+            {
+                "len": 6,
+                "sense": "m_en_gbus0749340.005",
+                "start": 15
+            },
+            {
+                "len": 5,
+                "sense": "m_en_gbus0175770.008",
+                "start": 28
+            }
+        ],
+        "text": "be or act as a parent to (a child)"
+    },
+    "m_en_gbus1140400.009_def": {
+        "senses": [
+            {
+                "len": 3,
+                "sense": "m_en_gbus1011660.006",
+                "start": 2
+            },
+            {
+                "len": 5,
+                "sense": "m_en_gbus0655300.005",
+                "start": 9
+            },
+            {
+                "len": 10,
+                "sense": "m_en_gbus0209390.017",
+                "start": 24
+            },
+            {
+                "len": 8,
+                "sense": "m_en_gbus0146290.008",
+                "start": 37
+            },
+            {
+                "len": 8,
+                "sense": "m_en_gbus0137920.008",
+                "start": 49
+            }
+        ],
+        "text": "a sum of money used for conducting a campaign or business"
+    }
+}
