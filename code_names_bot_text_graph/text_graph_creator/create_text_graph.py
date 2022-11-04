@@ -34,7 +34,7 @@ def add_text_edges(sense_id, entry, text_senses, sense_edges):
         for link_sense in text_senses[text_id]["senses"]:
             start = link_sense["start"]
             length = link_sense["len"]
-            sense_edges.append((sense_id, link_sense["sense"], "TEXT", f"{text_id}|{start}|{length}"))
+            sense_edges.append((sense_id, link_sense["sense"], "TEXT", f"{text_id}:{start}:{length}"))
 
 
 def get_sense_edges(dictionary, sense_inventory, synonym_disambiguator, text_senses, class_to_sense, domain_to_sense):
@@ -57,7 +57,7 @@ def get_lemma_edges(dictionary):
         tokens = lemma.replace("-", " ").split(" ")
 
         if len(tokens) == 1:
-            lemma_sense_edges.append((lemma.upper(), sense_id, "SENSE", str(entry["meta"]["is_primary"])))
+            lemma_sense_edges.append((lemma.upper(), sense_id, "HAS_SENSE", str(entry["meta"]["is_primary"])))
         else:
             for token in tokens:
                 lemma_sense_edges.append((token.upper(), sense_id, "COMPOUND", str(len(tokens))))

@@ -1,10 +1,10 @@
 import sys
 import random
 import json
+import argparse
 
 from code_names_bot_text_graph.text_disambiguator.text_sense_proposer import TextSenseProposer
 from code_names_bot_text_graph.token_tagger.token_tagger import TokenTagger
-from code_names_bot_text_graph.text_disambiguator.consec_text_disambiguator import ConsecTextDisambiguator
 from code_names_bot_text_graph.text_disambiguator.consec_compound_text_disambiguator import ConsecCompoundTextDisambiguator
 from code_names_bot_text_graph.sense_inventory.sense_inventory import SenseInventory
 from config import DICTIONARY, TEXT_SENSE_LABELS, TEXT_LIST, SENSE_INVENTORY
@@ -75,7 +75,19 @@ def read_sense_inventory():
         return json.loads(file.read())
 
 
+def get_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-s", type=int, default=0)
+    parser.add_argument("-l", action="store_true")
+    parser.add_argument("-t", type=str, default=None)
+
+    args = parser.parse_args()
+    return args.s, args.l, args.t
+
+
 def main():
+    start, labels_only, text_id = get_args()
+
     dictionary = read_dictionary()
     sense_labels = read_labels()
     text_dict = read_text_dict()
@@ -85,20 +97,19 @@ def main():
     sense_inventory = SenseInventory(sense_inventory_data)
     sense_proposer = TextSenseProposer(sense_inventory)
     disambiguator = ConsecCompoundTextDisambiguator(dictionary)
+
     labeler = TextLabeler(token_tagger, sense_proposer, disambiguator, TextLabelerWindow, text_dict, dictionary, sense_labels, save_labels)
 
 
-    if len(sys.argv) > 1 and sys.argv[1] == "-l":
+    if text_id is not None:
+        keys = [ text_id ]
+    elif labels_only == True:
         keys = list(sense_labels.keys())
-        start = 6
-    else:
-        keys = list(text_dict.keys())
+    elif labels_only == False:
+        keys = text_dict.keys()
+        keys = list(filter(lambda key: key not in sense_labels, keys))
         random.seed(0)
         random.shuffle(keys)
-
-        start = 0
-        while keys[start] in sense_labels:
-            start += 1
 
     labeler.start(keys, start=start)
 
