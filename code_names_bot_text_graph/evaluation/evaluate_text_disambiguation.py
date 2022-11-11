@@ -23,7 +23,7 @@ BATCH_SIZE = 1
 def evaluate_text(text_id, text, token_tagger, sense_proposer, disambiguator, sense_labels, dictionary):
     token_tags = token_tagger.tokenize_tag(text)
     token_senses, compound_indices = sense_proposer.propose_senses(token_tags)
-    predicted_senses = disambiguator.disambiguate(token_senses, compound_indices)
+    predicted_senses, _ = disambiguator.disambiguate(token_senses, compound_indices)
 
     correct = 0
     errors = defaultdict(lambda: [])

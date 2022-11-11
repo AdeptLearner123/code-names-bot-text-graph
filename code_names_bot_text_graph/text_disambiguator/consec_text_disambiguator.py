@@ -52,7 +52,7 @@ class ConsecTextDisambiguator(TextDisambiguator):
             sense_idx = torch.argmax(torch.tensor(probs))
             disambiguation_instance.set_result(senses[sense_idx])
 
-        return disambiguation_instance.get_disambiguated_senses()
+        return disambiguation_instance.get_disambiguated_senses(), []
 
     def _send_inputs_to_cuda(self, inputs):
         (input_ids, attention_mask, token_types, relative_pos, def_mask, def_pos) = inputs

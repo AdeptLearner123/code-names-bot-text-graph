@@ -1,5 +1,4 @@
-import sys
-import random
+]import random
 import json
 import argparse
 
@@ -30,7 +29,7 @@ class TextLabeler(Labeler):
         text = self._text_dict[current_key]
         token_tags = self._token_tagger.tokenize_tag(text)
         token_senses, compound_indices = self._sense_proposer.propose_senses(token_tags)
-        predicted_senses = self._disambiguator.disambiguate(token_senses, compound_indices)
+        predicted_senses, _ = self._disambiguator.disambiguate(token_senses, compound_indices)
 
         tokens, senses_list, definitions_list = [], [], []
         

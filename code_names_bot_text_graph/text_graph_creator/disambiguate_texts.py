@@ -15,17 +15,32 @@ def disambiguate(token_tagger, sense_proposer, disambiguator, text):
     doc = token_tagger.get_doc(text)
     token_tags = token_tagger.tokenize_tag_doc(doc)
     token_senses, compound_indices = sense_proposer.propose_senses(token_tags)
-    senses = disambiguator.disambiguate(token_senses, compound_indices)
+    senses, join_indices = disambiguator.disambiguate(token_senses, compound_indices)
+
+    sense_indices = []
+    for i, sense in enumerate(senses):
+        if sense is None:
+            sense_indices.append(None)
+        else:
+            sense_indices.append((sense, (i, i + 1)))
+    
+    for start, end in join_indices:
+        sense_indices[start] = (senses[start], (start, end))
+        sense_indices[start + 1:end] = [None] * (end - start - 1)
+
+    sense_indices = [ item for item in sense_indices if item is not None ]
 
     sense_char_idxs = []
-    for sense, token in zip(senses, doc):
-        if sense is not None:
-            sense_char_idxs.append({
-                "sense": sense,
-                "start": token.idx,
-                "len": len(token)
-            })
-    
+    for sense, (start, end) in sense_indices:
+        start_idx = doc[start].idx
+        length = len(doc[start:end].text)
+
+        sense_char_idxs.append({
+            "sense": sense,
+            "start": start_idx,
+            "len": length
+        })
+
     return sense_char_idxs
 
 
@@ -69,7 +84,8 @@ def main():
     disambiguator = ConsecCompoundTextDisambiguator(dictionary)
 
     disambiguated_text_ids = get_disambiguated_text_ids()
-    missing_text_ids = set(text_dict.keys()).difference(disambiguated_text_ids)
+    #missing_text_ids = set(text_dict.keys()).difference(disambiguated_text_ids)
+    missing_text_ids = set(["m_en_gbus1126880.005_def", "The_Starry_Night_text_1"])
     print("Text ids:", len(missing_text_ids), "/", len(text_dict))
 
     batch_text_senses = dict()
