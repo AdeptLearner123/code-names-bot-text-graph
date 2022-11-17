@@ -63,10 +63,7 @@ class TextSenseProposer:
             token_tags, token_senses
         )
 
-        print(token_tags)
-        print(compound_indices)
-
-        #self._unassign_proper_fragments(token_tags, token_senses)
+        self._unassign_proper_fragments(token_tags, token_senses)
         
         # Tokens that are stop words should not have any senses.
         # Otherwise compound words that conatin stop words will always have the stop word assigned to that sense.
