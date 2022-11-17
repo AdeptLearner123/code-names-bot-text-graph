@@ -49,18 +49,45 @@ def get_sense_edges(dictionary, sense_inventory, synonym_disambiguator, text_sen
     return sense_edges
 
 
+def tokenize(lemma):
+    return lemma.replace("-", " ").split(" ")
+
+
+def get_compound_tokens(lemma):
+    tokens = tokenize(lemma)
+
+    compound_tokens = []
+
+    if len(tokens) > 1:
+        for token in tokens:
+            compound_tokens.append(token.upper())
+    
+    if len(tokens) > 2:
+        # Add adjacent tokens, so that "LOCH NESS" is a comopund component of "LOCH NESS MONSTER"
+        for i in range(len(tokens) - 1):
+            token_pair = (tokens[i], tokens[i + 1])
+            separator = " " if " ".join(token_pair) in lemma else "-"
+            compound_tokens.append(separator.join(token_pair).upper())
+    
+    return compound_tokens
+
+
 def get_lemma_edges(dictionary):
     lemma_sense_edges = []
 
     for sense_id, entry in dictionary.items():
         lemma = entry["lemma"]
-        tokens = lemma.replace("-", " ").split(" ")
+        lemma_sense_edges.append((lemma.upper(), sense_id))
+        
+        variants = [ variant for variant in entry["variants"] if len(tokenize(variant)) == 1]
 
-        if len(tokens) == 1:
-            lemma_sense_edges.append((lemma.upper(), sense_id, "HAS_SENSE", str(entry["meta"]["is_primary"])))
-        else:
-            for token in tokens:
-                lemma_sense_edges.append((token.upper(), sense_id, "COMPOUND", str(len(tokens))))
+        if entry["pos"] == "proper":
+            # For Proper nouns, individual tokens count as variants too.
+            # Ex: "Jeff" for "Jeff Bezos" or "Yaris" for "Toyota Yaris" or "Loch Ness" for "Loch Ness monster"
+            variants += get_compound_tokens(lemma)
+
+        for variant in variants:
+            lemma_sense_edges.append((variant.upper(), sense_id))
 
     return lemma_sense_edges
 

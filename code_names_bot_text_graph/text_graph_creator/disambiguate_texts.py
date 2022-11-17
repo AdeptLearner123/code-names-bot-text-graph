@@ -84,8 +84,7 @@ def main():
     disambiguator = ConsecCompoundTextDisambiguator(dictionary)
 
     disambiguated_text_ids = get_disambiguated_text_ids()
-    #missing_text_ids = set(text_dict.keys()).difference(disambiguated_text_ids)
-    missing_text_ids = set(["m_en_gbus1126880.005_def", "The_Starry_Night_text_1"])
+    missing_text_ids = set(text_dict.keys()).difference(disambiguated_text_ids)
     print("Text ids:", len(missing_text_ids), "/", len(text_dict))
 
     batch_text_senses = dict()

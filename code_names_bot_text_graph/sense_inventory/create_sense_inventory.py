@@ -13,7 +13,7 @@ def main():
     token_tagger = TokenTagger()
     lemma_senses = dict()
     for sense_id, entry in tqdm(list(dictionary.items())):
-        lemma_forms = [entry["lemma"]] + entry["variants"]
+        lemma_forms = list(set([entry["lemma"]] + entry["variants"] + entry["inflections"]))
         pos = entry["pos"]
         for lemma_form in lemma_forms:
             lemma_key = f"{lemma_form}|{pos}"
