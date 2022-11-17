@@ -1,4 +1,4 @@
-]import random
+import random
 import json
 import argparse
 
@@ -24,12 +24,16 @@ class TextLabeler(Labeler):
         # Extract sense id from text id so that we can display the lemma in the title
         current_sense_id = current_key.replace("_def", "|").replace("_text", "|").split("|")[0]
         current_lemma = self._dictionary[current_sense_id]["lemma"]
-        title = f"{self._current}: {current_lemma} -- {current_key}"
+        title = f"{self._current} / {len(self._keys)}: {current_lemma} -- {current_key}"
 
         text = self._text_dict[current_key]
         token_tags = self._token_tagger.tokenize_tag(text)
         token_senses, compound_indices = self._sense_proposer.propose_senses(token_tags)
-        predicted_senses, _ = self._disambiguator.disambiguate(token_senses, compound_indices)
+        
+        if self._disambiguator is not None:
+            predicted_senses, _ = self._disambiguator.disambiguate(token_senses, compound_indices)
+        else:
+            predicted_senses = [None] * len(token_senses)
 
         tokens, senses_list, definitions_list = [], [], []
         
@@ -64,7 +68,6 @@ def read_text_dict():
 
 
 def save_labels(sense_labels):
-    print("Total sense labels", len(sense_labels))
     with open(TEXT_SENSE_LABELS, "w+") as file:
         file.write(json.dumps(sense_labels, sort_keys=True, indent=4, ensure_ascii=False))
 
@@ -79,13 +82,15 @@ def get_args():
     parser.add_argument("-s", type=int, default=0)
     parser.add_argument("-l", action="store_true")
     parser.add_argument("-t", type=str, default=None)
+    parser.add_argument('--no-disambiguate', dest='disambiguate', action='store_false')
+    parser.set_defaults(disambiguate=True)
 
     args = parser.parse_args()
-    return args.s, args.l, args.t
+    return args.s, args.l, args.t, args.disambiguate
 
 
 def main():
-    start, labels_only, text_id = get_args()
+    start, labels_only, text_id, should_disambiguate = get_args()
 
     dictionary = read_dictionary()
     sense_labels = read_labels()
@@ -95,10 +100,9 @@ def main():
     token_tagger = TokenTagger()
     sense_inventory = SenseInventory(sense_inventory_data)
     sense_proposer = TextSenseProposer(sense_inventory)
-    disambiguator = ConsecCompoundTextDisambiguator(dictionary)
+    disambiguator = ConsecCompoundTextDisambiguator(dictionary) if should_disambiguate else None
 
     labeler = TextLabeler(token_tagger, sense_proposer, disambiguator, TextLabelerWindow, text_dict, dictionary, sense_labels, save_labels)
-
 
     if text_id is not None:
         keys = [ text_id ]
